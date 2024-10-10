@@ -79,6 +79,10 @@
             "itGlueId": "8260819",
             "credentialsId": "19132422"
         },
+        "Curijo Pty Ltd": {
+            "itGlueId": "8260839",
+            "credentialsId": "14277889"
+        },
         // Add more company names and IDs here as needed
     };
 
