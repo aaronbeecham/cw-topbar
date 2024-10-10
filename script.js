@@ -2,8 +2,6 @@
 // @name         Top Bar
 // @namespace    http://tampermonkey.net/
 // @version      2.4
-// @description  Add IT Glue and 365 Credentials buttons in a top bar for ConnectWise
-// @author       Your Name
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
@@ -63,7 +61,7 @@
         },
         "Evolve Housing": {
             "itGlueId": "4842737",
-            "credentialsId": "22010818"
+            "credentialsId": "18315959"
         },
         "Girl Guides NSW, ACT & NT": {
             "itGlueId": "8260882",
