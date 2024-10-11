@@ -87,6 +87,10 @@
             "itGlueId": "8261000",
             "credentialsId": "2291285"
         },
+        "Domaine Wine Shippers (DWS)": {
+            "itGlueId": "8260846",
+            "credentialsId": "27996400"
+        },
         // Add more company names and IDs here as needed
     };
 
