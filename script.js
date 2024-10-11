@@ -91,6 +91,10 @@
             "itGlueId": "8260846",
             "credentialsId": "27996400"
         },
+        "align.me": {
+            "itGlueId": "4314127",
+            "credentialsId": "17451897"
+        },
         // Add more company names and IDs here as needed
     };
 
