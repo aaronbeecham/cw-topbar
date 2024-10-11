@@ -83,6 +83,11 @@
             "itGlueId": "8260839",
             "credentialsId": "14277889"
         },
+        },
+        "My Gateway": {
+            "itGlueId": "8261000",
+            "credentialsId": "2291285"
+        },
         // Add more company names and IDs here as needed
     };
 
