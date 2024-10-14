@@ -99,6 +99,10 @@
             "itGlueId": "8260753",
             "credentialsId": "16717196"
         },
+        "Care Pharmaceuticals": {
+            "itGlueId": "8260810",
+            "credentialsId": "16884291"
+        },
         // Add more company names and IDs here as needed
     };
 
