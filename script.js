@@ -95,6 +95,10 @@
             "itGlueId": "4314127",
             "credentialsId": "17451897"
         },
+        "CleanSpace Technology Pty Ltd": {
+            "itGlueId": "8260753",
+            "credentialsId": "16717196"
+        },
         // Add more company names and IDs here as needed
     };
 
