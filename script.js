@@ -1,8 +1,7 @@
 // ==UserScript==
-// @name         Top Bar Optimized
+// @name         Top Bar
 // @namespace    http://tampermonkey.net/
-// @version      2.5
-// @description  Adds a custom top bar with IT Glue links based on the company name.
+// @version      2.4
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
@@ -50,7 +49,7 @@
         },
         "Axis Plumbing": {
             "itGlueId": "4585191",
-            "credentialsId": "15338780"
+            "credentialsId": "13763560"
         },
         "AWN Food & Fibre Holdings Pty Ltd": {
             "itGlueId": "8260787",
@@ -96,25 +95,43 @@
             "itGlueId": "4314127",
             "credentialsId": "17451897"
         },
-        "ROC Partners Pty Limited": {
-            "itGlueId": "3010977",
-            "credentialsId": "5617401"
+        "CleanSpace Technology Pty Ltd": {
+            "itGlueId": "8260753",
+            "credentialsId": "16717196"
+        },
+        "Care Pharmaceuticals": {
+            "itGlueId": "8260810",
+            "credentialsId": "16884291"
         },
         // Add more company names and IDs here as needed
     };
 
-    let currentCompanyName = null;
+    // Function to add the custom buttons in the top bar
+    function addCustomTopBar() {
+        // Get the company name from the input field
+        const companyNameElement = document.querySelector('input.GL4OBY5BAVH.GL4OBY5BLVH.cw_company[type="text"]');
+        let companyName = companyNameElement ? companyNameElement.value.trim() : null;
 
-    function addCustomTopBar(companyName) {
+        // Set the default URLs (for unknown companies)
+        const defaultItGlueUrl = 'https://virtual-it-services.itglue.com/';
+        const defaultCredentialsUrl = 'https://virtual-it-services.itglue.com/';
+
+        // Retry if the company name is not detected right away
+        if (!companyName) {
+            console.log('Company name not detected, retrying...');
+            setTimeout(addCustomTopBar, 1000);  // Retry after 1 second if the company name is not found
+            return;
+        }
+
+        // Determine the URLs based on the company IDs
         const companyData = companyLinks[companyName];
-        const defaultUrl = 'https://virtual-it-services.itglue.com/';
-        const itGlueUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}` : defaultUrl;
-        const credentialsUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}/passwords/${companyData.credentialsId}` : defaultUrl;
+        const itGlueUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}` : defaultItGlueUrl;
+        const credentialsUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}/passwords/${companyData.credentialsId}` : defaultCredentialsUrl;
 
-        let topBar = document.getElementById('customTopBar');
-        if (!topBar) {
+        // Check if the top bar already exists
+        if (!document.getElementById('customTopBar')) {
             // Create the top bar
-            topBar = document.createElement('div');
+            const topBar = document.createElement('div');
             topBar.id = 'customTopBar';
             topBar.style.position = 'fixed';
             topBar.style.top = '0';
@@ -123,7 +140,7 @@
             topBar.style.backgroundColor = '#007bff';
             topBar.style.color = '#fff';
             topBar.style.height = '44px';
-            topBar.style.zIndex = '9999'; // Ensure it stays on top of other elements
+            topBar.style.zIndex = '9999';  // Ensure it stays on top of other elements
             topBar.style.display = 'flex';
             topBar.style.alignItems = 'center';
             topBar.style.justifyContent = 'center';
@@ -163,49 +180,19 @@
             document.body.insertBefore(topBar, document.body.firstChild);
             document.body.style.paddingTop = '44px';
         } else {
-            // Update button actions if the company name has changed
-            document.getElementById('itGlueButton').onclick = function() {
+            // Update the buttons' URLs if the company changes
+            const itGlueButton = document.getElementById('itGlueButton');
+            const credentialsButton = document.getElementById('credentialsButton');
+            itGlueButton.onclick = function() {
                 window.open(itGlueUrl, '_blank');
             };
-            document.getElementById('credentialsButton').onclick = function() {
+            credentialsButton.onclick = function() {
                 window.open(credentialsUrl, '_blank');
             };
         }
     }
 
-    function init() {
-        const companyInputSelector = 'input.GL4OBY5BAVH.GL4OBY5BLVH.cw_company[type="text"]';
-        let companyInput = document.querySelector(companyInputSelector);
+    // Continuously check every second to ensure the top bar is present and updated
+    setInterval(addCustomTopBar, 1000);
 
-        if (!companyInput) {
-            // Wait until the company input field is available
-            const observer = new MutationObserver(() => {
-                companyInput = document.querySelector(companyInputSelector);
-                if (companyInput) {
-                    observer.disconnect();
-                    observeCompanyName(companyInput);
-                }
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
-        } else {
-            observeCompanyName(companyInput);
-        }
-    }
-
-    function observeCompanyName(companyInput) {
-        currentCompanyName = companyInput.value.trim();
-        addCustomTopBar(currentCompanyName);
-
-        const inputObserver = new MutationObserver(() => {
-            const newCompanyName = companyInput.value.trim();
-            if (newCompanyName !== currentCompanyName) {
-                currentCompanyName = newCompanyName;
-                addCustomTopBar(currentCompanyName);
-            }
-        });
-
-        inputObserver.observe(companyInput, { attributes: true, attributeFilter: ['value'] });
-    }
-
-    window.addEventListener('load', init);
 })();
