@@ -103,6 +103,10 @@
             "itGlueId": "8260810",
             "credentialsId": "16884291"
         },
+        "Nugan Estate Wines": {
+            "itGlueId": "3614543",
+            "credentialsId": "7001345"
+        },
         // Add more company names and IDs here as needed
     };
 
