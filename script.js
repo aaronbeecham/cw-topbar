@@ -193,6 +193,6 @@
     }
 
     // Continuously check every second to ensure the top bar is present and updated
-    setInterval(addCustomTopBar, 1000);
+    setInterval(addCustomTopBar, 5000);
 
 })();
