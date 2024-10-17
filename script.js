@@ -107,6 +107,10 @@
             "itGlueId": "3614543",
             "credentialsId": "7001345"
         },
+        "Mini Tankers Australia Pty Ltd (RFS)": {
+            "itGlueId": "8260990",
+            "credentialsId": "23630488"
+        },
         // Add more company names and IDs here as needed
     };
 
