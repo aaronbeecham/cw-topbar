@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Top Bar
 // @namespace    http://tampermonkey.net/
-// @version      2.4
+// @version      2.5
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
@@ -13,103 +13,128 @@
     const companyLinks = {
         "Family Services Australia (FSA)": {
             "itGlueId": "8260864",
-            "credentialsId": "8576248"
+            "credentialsId": "8576248",
+            "localAdminId": ""
         },
         "Peoplecare": {
             "itGlueId": "5429844",
-            "credentialsId": "15552914"
+            "credentialsId": "15552914",
+            "localAdminId": ""
         },
         "State Sport Centres Trust (SSCT)": {
             "itGlueId": "8261103",
-            "credentialsId": "10494182"
+            "credentialsId": "10494182",
+            "localAdminId": ""
         },
         "Lubrication Engineers": {
             "itGlueId": "8260966",
-            "credentialsId": "2812021"
+            "credentialsId": "2812021",
+            "localAdminId": ""
         },
         "Heard McEwan Pty Limited": {
             "itGlueId": "8260899",
-            "credentialsId": "6090767"
+            "credentialsId": "6090767",
+            "localAdminId": ""
         },
         "ECTARC": {
             "itGlueId": "8260856",
-            "credentialsId": "26041223"
+            "credentialsId": "26041223",
+            "localAdminId": ""
         },
         "Aquilius Investment Partners Pte. Ltd.": {
             "itGlueId": "8260774",
-            "credentialsId": "17559312"
+            "credentialsId": "17559312",
+            "localAdminId": ""
         },
         "Polyflor": {
             "itGlueId": "8261037",
-            "credentialsId": "10096962"
+            "credentialsId": "10096962",
+            "localAdminId": ""
         },
         "Chamberlains": {
             "itGlueId": "8260821",
-            "credentialsId": "2551350"
+            "credentialsId": "2551350",
+            "localAdminId": ""
         },
         "Axis Plumbing": {
             "itGlueId": "4585191",
-            "credentialsId": "13763560"
+            "credentialsId": "13763560",
+            "localAdminId": ""
         },
         "AWN Food & Fibre Holdings Pty Ltd": {
             "itGlueId": "8260787",
-            "credentialsId": "24109183"
+            "credentialsId": "24109183",
+            "localAdminId": ""
         },
         "Chartertech Pty Ltd": {
             "itGlueId": "8260823",
-            "credentialsId": "14265908"
+            "credentialsId": "14265908",
+            "localAdminId": ""
         },
         "Evolve Housing": {
             "itGlueId": "4842737",
-            "credentialsId": "22010818"
+            "credentialsId": "22010818",
+            "localAdminId": "14628112"
         },
         "Girl Guides NSW, ACT & NT": {
             "itGlueId": "8260882",
-            "credentialsId": "20606178"
+            "credentialsId": "20606178",
+            "localAdminId": ""
         },
         "Endotherapeutics Pty Ltd": {
             "itGlueId": "8260859",
-            "credentialsId": "23434860"
+            "credentialsId": "23434860",
+            "localAdminId": ""
         },
         "Advanced Constructions": {
             "itGlueId": "8260765",
-            "credentialsId": "18342882"
+            "credentialsId": "18342882",
+            "localAdminId": ""
         },
         "Centurion Healthcare": {
             "itGlueId": "8260819",
-            "credentialsId": "19132422"
+            "credentialsId": "19132422",
+            "localAdminId": ""
         },
         "Curijo Pty Ltd": {
             "itGlueId": "8260839",
-            "credentialsId": "14277889"
+            "credentialsId": "14277889",
+            "localAdminId": ""
         },
         "My Gateway": {
             "itGlueId": "8261000",
-            "credentialsId": "2291285"
+            "credentialsId": "2291285",
+            "localAdminId": ""
         },
         "Domaine Wine Shippers (DWS)": {
             "itGlueId": "8260846",
-            "credentialsId": "27996400"
+            "credentialsId": "27996400",
+            "localAdminId": ""
         },
         "align.me": {
             "itGlueId": "4314127",
-            "credentialsId": "17451897"
+            "credentialsId": "17451897",
+            "localAdminId": ""
         },
         "CleanSpace Technology Pty Ltd": {
             "itGlueId": "8260753",
-            "credentialsId": "16717196"
+            "credentialsId": "16717196",
+            "localAdminId": ""
         },
         "Care Pharmaceuticals": {
             "itGlueId": "8260810",
-            "credentialsId": "16884291"
+            "credentialsId": "16884291",
+            "localAdminId": ""
         },
         "Nugan Estate Wines": {
             "itGlueId": "3614543",
-            "credentialsId": "7001345"
+            "credentialsId": "7001345",
+            "localAdminId": ""
         },
         "Mini Tankers Australia Pty Ltd (RFS)": {
             "itGlueId": "8260990",
-            "credentialsId": "23630488"
+            "credentialsId": "23630488",
+            "localAdminId": ""
         },
         // Add more company names and IDs here as needed
     };
@@ -123,6 +148,7 @@
         // Set the default URLs (for unknown companies)
         const defaultItGlueUrl = 'https://virtual-it-services.itglue.com/';
         const defaultCredentialsUrl = 'https://virtual-it-services.itglue.com/';
+        const defaultLocalAdminUrl = 'https://virtual-it-services.itglue.com/';
 
         // Retry if the company name is not detected right away
         if (!companyName) {
@@ -135,6 +161,7 @@
         const companyData = companyLinks[companyName];
         const itGlueUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}` : defaultItGlueUrl;
         const credentialsUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}/passwords/${companyData.credentialsId}` : defaultCredentialsUrl;
+        const localAdminUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}/passwords/${companyData.localAdminId}` : defaultLocalAdminUrl;
 
         // Check if the top bar already exists
         if (!document.getElementById('customTopBar')) {
@@ -180,9 +207,24 @@
                 window.open(credentialsUrl, '_blank');
             };
 
-            // Add both buttons to the top bar
+            // Create the Local Admin Passwords button
+            const localAdminButton = document.createElement('button');
+            localAdminButton.id = 'localAdminButton';
+            localAdminButton.style.backgroundColor = '#fff';
+            localAdminButton.style.color = '#007bff';
+            localAdminButton.style.padding = '5px 10px';
+            localAdminButton.style.border = 'none';
+            localAdminButton.style.cursor = 'pointer';
+            localAdminButton.style.margin = '0 10px';
+            localAdminButton.innerText = 'Local Admin Passwords';
+            localAdminButton.onclick = function() {
+                window.open(localAdminUrl, '_blank');
+            };
+
+            // Add all buttons to the top bar
             topBar.appendChild(itGlueButton);
             topBar.appendChild(credentialsButton);
+            topBar.appendChild(localAdminButton);
 
             // Add the top bar to the page
             document.body.insertBefore(topBar, document.body.firstChild);
@@ -191,11 +233,15 @@
             // Update the buttons' URLs if the company changes
             const itGlueButton = document.getElementById('itGlueButton');
             const credentialsButton = document.getElementById('credentialsButton');
+            const localAdminButton = document.getElementById('localAdminButton');
             itGlueButton.onclick = function() {
                 window.open(itGlueUrl, '_blank');
             };
             credentialsButton.onclick = function() {
                 window.open(credentialsUrl, '_blank');
+            };
+            localAdminButton.onclick = function() {
+                window.open(localAdminUrl, '_blank');
             };
         }
     }
