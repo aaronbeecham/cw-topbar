@@ -114,7 +114,7 @@
         "align.me": {
             "itGlueId": "4314127",
             "credentialsId": "17451897",
-            "localAdminId": ""
+            "localAdminId": "9732988"
         },
         "CleanSpace Technology Pty Ltd": {
             "itGlueId": "8260753",
@@ -207,7 +207,7 @@
                 window.open(credentialsUrl, '_blank');
             };
 
-            // Create the Local Admin Passwords button
+            // Create the Local Admin button
             const localAdminButton = document.createElement('button');
             localAdminButton.id = 'localAdminButton';
             localAdminButton.style.backgroundColor = '#fff';
@@ -216,7 +216,7 @@
             localAdminButton.style.border = 'none';
             localAdminButton.style.cursor = 'pointer';
             localAdminButton.style.margin = '0 10px';
-            localAdminButton.innerText = 'Local Admin Passwords';
+            localAdminButton.innerText = 'Local Admin';
             localAdminButton.onclick = function() {
                 window.open(localAdminUrl, '_blank');
             };
