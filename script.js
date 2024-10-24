@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Top Bar
 // @namespace    http://tampermonkey.net/
-// @version      2.5
+// @version      2.6
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
@@ -169,9 +169,9 @@
 
         // Determine the URLs based on the company IDs
         const companyData = companyLinks[companyName];
-        const itGlueUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}` : defaultItGlueUrl;
-        const credentialsUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}/passwords/${companyData.credentialsId}` : defaultCredentialsUrl;
-        const localAdminUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}/passwords/${companyData.localAdminId}` : defaultLocalAdminUrl;
+        const itGlueUrl = companyData ? `https://virtual-it-services.itglue.com/organizations/${companyData.itGlueId}` : defaultItGlueUrl;
+        const credentialsUrl = companyData && companyData.credentialsId ? `https://virtual-it-services.itglue.com/organizations/${companyData.itGlueId}/passwords/${companyData.credentialsId}` : defaultCredentialsUrl;
+        const localAdminUrl = companyData && companyData.localAdminId ? `https://virtual-it-services.itglue.com/organizations/${companyData.itGlueId}/passwords/${companyData.localAdminId}` : defaultLocalAdminUrl;
 
         // Check if the top bar already exists
         if (!document.getElementById('customTopBar')) {
@@ -180,8 +180,8 @@
             topBar.id = 'customTopBar';
             topBar.style.position = 'fixed';
             topBar.style.top = '0';
-            topBar.style.left = '0';
-            topBar.style.width = '100%';
+            topBar.style.left = '50%';
+            topBar.style.transform = 'translateX(-50%)';
             topBar.style.backgroundColor = '#007bff';
             topBar.style.color = '#fff';
             topBar.style.height = '44px';
@@ -189,6 +189,8 @@
             topBar.style.display = 'flex';
             topBar.style.alignItems = 'center';
             topBar.style.justifyContent = 'center';
+            topBar.style.padding = '0 20px';  // Add buffer space around the sides of the buttons
+            topBar.style.borderRadius = '0 0 5px 5px';  // Optional: rounded corners at the bottom
 
             // Create the IT Glue Link button
             const itGlueButton = document.createElement('button');
@@ -212,6 +214,7 @@
             credentialsButton.style.padding = '5px 10px';
             credentialsButton.style.border = 'none';
             credentialsButton.style.cursor = 'pointer';
+            credentialsButton.style.margin = '0 10px';
             credentialsButton.innerText = '365 Credentials';
             credentialsButton.onclick = function() {
                 window.open(credentialsUrl, '_blank');
@@ -256,7 +259,7 @@
         }
     }
 
-    // Continuously check every second to ensure the top bar is present and updated
+    // Continuously check every 5 seconds to ensure the top bar is present and updated
     setInterval(addCustomTopBar, 5000);
 
 })();
