@@ -136,6 +136,16 @@
             "credentialsId": "23630488",
             "localAdminId": ""
         },
+        "Australian Indigenous Education Foundation (AIEF)": {
+            "itGlueId": "8260782",
+            "credentialsId": "16716437",
+            "localAdminId": "24325209"
+        },
+        "RSL National": {
+            "itGlueId": "8261081",
+            "credentialsId": "13762888",
+            "localAdminId": "24325209"
+        },
         // Add more company names and IDs here as needed
     };
 
