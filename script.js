@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Top Bar
 // @namespace    http://tampermonkey.net/
-// @version      2.6
+// @version      2.8
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
@@ -169,9 +169,9 @@
 
         // Determine the URLs based on the company IDs
         const companyData = companyLinks[companyName];
-        const itGlueUrl = companyData ? `https://virtual-it-services.itglue.com/organizations/${companyData.itGlueId}` : defaultItGlueUrl;
-        const credentialsUrl = companyData && companyData.credentialsId ? `https://virtual-it-services.itglue.com/organizations/${companyData.itGlueId}/passwords/${companyData.credentialsId}` : defaultCredentialsUrl;
-        const localAdminUrl = companyData && companyData.localAdminId ? `https://virtual-it-services.itglue.com/organizations/${companyData.itGlueId}/passwords/${companyData.localAdminId}` : defaultLocalAdminUrl;
+        const itGlueUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}` : defaultItGlueUrl;
+        const credentialsUrl = companyData && companyData.credentialsId ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}/passwords/${companyData.credentialsId}` : defaultCredentialsUrl;
+        const localAdminUrl = companyData && companyData.localAdminId ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}/passwords/${companyData.localAdminId}` : defaultLocalAdminUrl;
 
         // Check if the top bar already exists
         if (!document.getElementById('customTopBar')) {
@@ -180,8 +180,6 @@
             topBar.id = 'customTopBar';
             topBar.style.position = 'fixed';
             topBar.style.top = '0';
-            topBar.style.left = '50%';
-            topBar.style.transform = 'translateX(-50%)';
             topBar.style.backgroundColor = '#007bff';
             topBar.style.color = '#fff';
             topBar.style.height = '44px';
@@ -191,6 +189,54 @@
             topBar.style.justifyContent = 'center';
             topBar.style.padding = '0 20px';  // Add buffer space around the sides of the buttons
             topBar.style.borderRadius = '0 0 5px 5px';  // Optional: rounded corners at the bottom
+            topBar.style.cursor = 'move'; // Indicate that the bar is draggable
+
+            // Restore position from localStorage or center it
+            let storedPosition = localStorage.getItem('topBarPosition');
+            if (storedPosition !== null) {
+                topBar.style.left = `${storedPosition}px`;
+            } else {
+                // Center the top bar
+                topBar.style.left = '50%';
+                topBar.style.transform = 'translateX(-50%)';
+            }
+
+            // Variables for dragging
+            let isDragging = false;
+            let startX = 0;
+            let initialLeft = 0;
+
+            // Mouse event handlers
+            topBar.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                startX = e.clientX;
+                initialLeft = topBar.offsetLeft;
+                topBar.style.transition = 'none'; // Disable transitions during drag
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    let deltaX = e.clientX - startX;
+                    let newLeft = initialLeft + deltaX;
+
+                    // Prevent the bar from moving off-screen
+                    const maxLeft = window.innerWidth - topBar.offsetWidth;
+                    if (newLeft < 0) newLeft = 0;
+                    if (newLeft > maxLeft) newLeft = maxLeft;
+
+                    topBar.style.left = `${newLeft}px`;
+                    topBar.style.transform = ''; // Remove transform when dragging
+                }
+            });
+
+            document.addEventListener('mouseup', function(e) {
+                if (isDragging) {
+                    isDragging = false;
+                    // Save the position to localStorage
+                    localStorage.setItem('topBarPosition', topBar.offsetLeft);
+                    topBar.style.transition = ''; // Re-enable transitions if any
+                }
+            });
 
             // Create the IT Glue Link button
             const itGlueButton = document.createElement('button');
