@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Top Bar
 // @namespace    http://tampermonkey.net/
-// @version      2.8
+// @version      2.9
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
@@ -146,6 +146,11 @@
             "credentialsId": "13762888",
             "localAdminId": "24325209"
         },
+        "Briemar Nominees Pty Ltd": {
+            "itGlueId": "8260800",
+            "credentialsId": "27386480",
+            "localAdminId": "26985042"
+        },
         // Add more company names and IDs here as needed
     };
 
@@ -190,6 +195,7 @@
             topBar.style.padding = '0 20px';  // Add buffer space around the sides of the buttons
             topBar.style.borderRadius = '0 0 5px 5px';  // Optional: rounded corners at the bottom
             topBar.style.cursor = 'move'; // Indicate that the bar is draggable
+            topBar.style.userSelect = 'none'; // Prevent text selection during drag
 
             // Restore position from localStorage or center it
             let storedPosition = localStorage.getItem('topBarPosition');
@@ -201,20 +207,47 @@
                 topBar.style.transform = 'translateX(-50%)';
             }
 
+            // Create left and right grab indicators
+            const leftGrab = document.createElement('div');
+            leftGrab.style.width = '10px';
+            leftGrab.style.height = '100%';
+            leftGrab.style.cursor = 'move';
+            leftGrab.style.display = 'flex';
+            leftGrab.style.alignItems = 'center';
+            leftGrab.style.justifyContent = 'center';
+            leftGrab.style.marginRight = '5px';
+
+            const rightGrab = document.createElement('div');
+            rightGrab.style.width = '10px';
+            rightGrab.style.height = '100%';
+            rightGrab.style.cursor = 'move';
+            rightGrab.style.display = 'flex';
+            rightGrab.style.alignItems = 'center';
+            rightGrab.style.justifyContent = 'center';
+            rightGrab.style.marginLeft = '5px';
+
+            // Use Unicode characters for grab indicators (you can replace these with images if preferred)
+            leftGrab.innerHTML = '&#x2630;'; // Triple bar icon
+            rightGrab.innerHTML = '&#x2630;'; // Triple bar icon
+
+            leftGrab.style.color = '#fff';
+            rightGrab.style.color = '#fff';
+
             // Variables for dragging
             let isDragging = false;
             let startX = 0;
             let initialLeft = 0;
 
-            // Mouse event handlers
-            topBar.addEventListener('mousedown', function(e) {
+            // Mouse event handlers for the grab indicators
+            function dragMouseDown(e) {
                 isDragging = true;
                 startX = e.clientX;
                 initialLeft = topBar.offsetLeft;
                 topBar.style.transition = 'none'; // Disable transitions during drag
-            });
+                document.body.style.userSelect = 'none'; // Prevent text selection during drag
+            }
 
-            document.addEventListener('mousemove', function(e) {
+            function dragMouseMove(e) {
                 if (isDragging) {
                     let deltaX = e.clientX - startX;
                     let newLeft = initialLeft + deltaX;
@@ -227,16 +260,23 @@
                     topBar.style.left = `${newLeft}px`;
                     topBar.style.transform = ''; // Remove transform when dragging
                 }
-            });
+            }
 
-            document.addEventListener('mouseup', function(e) {
+            function dragMouseUp(e) {
                 if (isDragging) {
                     isDragging = false;
                     // Save the position to localStorage
                     localStorage.setItem('topBarPosition', topBar.offsetLeft);
                     topBar.style.transition = ''; // Re-enable transitions if any
+                    document.body.style.userSelect = ''; // Re-enable text selection
                 }
-            });
+            }
+
+            // Attach event listeners to the grab indicators
+            leftGrab.addEventListener('mousedown', dragMouseDown);
+            rightGrab.addEventListener('mousedown', dragMouseDown);
+            document.addEventListener('mousemove', dragMouseMove);
+            document.addEventListener('mouseup', dragMouseUp);
 
             // Create the IT Glue Link button
             const itGlueButton = document.createElement('button');
@@ -280,10 +320,21 @@
                 window.open(localAdminUrl, '_blank');
             };
 
-            // Add all buttons to the top bar
-            topBar.appendChild(itGlueButton);
-            topBar.appendChild(credentialsButton);
-            topBar.appendChild(localAdminButton);
+            // Create a container for the buttons
+            const buttonContainer = document.createElement('div');
+            buttonContainer.style.display = 'flex';
+            buttonContainer.style.alignItems = 'center';
+            buttonContainer.style.justifyContent = 'center';
+
+            // Add buttons to the container
+            buttonContainer.appendChild(itGlueButton);
+            buttonContainer.appendChild(credentialsButton);
+            buttonContainer.appendChild(localAdminButton);
+
+            // Build the top bar
+            topBar.appendChild(leftGrab);
+            topBar.appendChild(buttonContainer);
+            topBar.appendChild(rightGrab);
 
             // Add the top bar to the page
             document.body.insertBefore(topBar, document.body.firstChild);
