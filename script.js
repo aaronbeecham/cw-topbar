@@ -149,7 +149,13 @@
         "Briemar Nominees Pty Ltd": {
             "itGlueId": "8260800",
             "credentialsId": "27386480",
-            "localAdminId": "26985042"
+            "localAdminId": "26985042",
+        },
+        "ROC Partners Pty Limited": {
+            "itGlueId": "3010977",
+            "credentialsId": "5617401",
+            "localAdminId": "5617396",
+            "useGreenlightUrl": true
         },
         // Add more company names and IDs here as needed
     };
@@ -160,10 +166,13 @@
         const companyNameElement = document.querySelector('input.GL4OBY5BAVH.GL4OBY5BLVH.cw_company[type="text"]');
         let companyName = companyNameElement ? companyNameElement.value.trim() : null;
 
+        // Set the default base URL
+        const defaultBaseUrl = 'https://virtual-it-services.itglue.com/';
+
         // Set the default URLs (for unknown companies)
-        const defaultItGlueUrl = 'https://virtual-it-services.itglue.com/';
-        const defaultCredentialsUrl = 'https://virtual-it-services.itglue.com/';
-        const defaultLocalAdminUrl = 'https://virtual-it-services.itglue.com/';
+        const defaultItGlueUrl = defaultBaseUrl;
+        const defaultCredentialsUrl = defaultBaseUrl;
+        const defaultLocalAdminUrl = defaultBaseUrl;
 
         // Retry if the company name is not detected right away
         if (!companyName) {
@@ -174,9 +183,10 @@
 
         // Determine the URLs based on the company IDs
         const companyData = companyLinks[companyName];
-        const itGlueUrl = companyData ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}` : defaultItGlueUrl;
-        const credentialsUrl = companyData && companyData.credentialsId ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}/passwords/${companyData.credentialsId}` : defaultCredentialsUrl;
-        const localAdminUrl = companyData && companyData.localAdminId ? `https://virtual-it-services.itglue.com/${companyData.itGlueId}/passwords/${companyData.localAdminId}` : defaultLocalAdminUrl;
+        const baseItGlueUrl = companyData && companyData.useGreenlightUrl ? 'https://greenlight-itc.itglue.com/' : defaultBaseUrl;
+        const itGlueUrl = companyData ? `${baseItGlueUrl}${companyData.itGlueId}` : defaultItGlueUrl;
+        const credentialsUrl = companyData && companyData.credentialsId ? `${baseItGlueUrl}${companyData.itGlueId}/passwords/${companyData.credentialsId}` : defaultCredentialsUrl;
+        const localAdminUrl = companyData && companyData.localAdminId ? `${baseItGlueUrl}${companyData.itGlueId}/passwords/${companyData.localAdminId}` : defaultLocalAdminUrl;
 
         // Check if the top bar already exists
         if (!document.getElementById('customTopBar')) {
@@ -226,7 +236,7 @@
             rightGrab.style.justifyContent = 'center';
             rightGrab.style.marginLeft = '5px';
 
-            // Use Unicode characters for grab indicators (you can replace these with images if preferred)
+            // Use Unicode characters for grab indicators
             leftGrab.innerHTML = '&#x2630;'; // Triple bar icon
             rightGrab.innerHTML = '&#x2630;'; // Triple bar icon
 
