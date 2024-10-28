@@ -24,7 +24,7 @@
         "State Sport Centres Trust (SSCT)": {
             "itGlueId": "8261103",
             "credentialsId": "10494182",
-            "localAdminId": ""
+            "localAdminId": "10972458"
         },
         "Lubrication Engineers": {
             "itGlueId": "8260966",
