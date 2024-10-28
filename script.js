@@ -157,6 +157,11 @@
             "localAdminId": "5617396",
             "useGreenlightUrl": true
         },
+        "Infrastructure Sustainability Council (ISCA)": {
+            "itGlueId": "6174644",
+            "credentialsId": "19652915",
+            "localAdminId": "17750338",
+        },
         // Add more company names and IDs here as needed
     };
 
