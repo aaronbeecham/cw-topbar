@@ -64,7 +64,7 @@
         "AWN Food & Fibre Holdings Pty Ltd": {
             "itGlueId": "8260787",
             "credentialsId": "24109183",
-            "localAdminId": ""
+            "localAdminId": "20819327"
         },
         "Chartertech Pty Ltd": {
             "itGlueId": "8260823",
