@@ -172,6 +172,11 @@
             "credentialsId": "21242437",
             "localAdminId": "",
         },
+        "Valiant Commercial Furniture": {
+            "itGlueId": "8261136",
+            "credentialsId": "7571715",
+            "localAdminId": "7488319",
+        },
         // Add more company names and IDs here as needed
     };
 
