@@ -162,6 +162,11 @@
             "credentialsId": "19652915",
             "localAdminId": "17750338",
         },
+        "Guidolin Agrimac": {
+            "itGlueId": "8260895",
+            "credentialsId": "17046512",
+            "localAdminId": "17032597",
+        },
         // Add more company names and IDs here as needed
     };
 
