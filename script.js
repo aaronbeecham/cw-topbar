@@ -167,6 +167,11 @@
             "credentialsId": "17046512",
             "localAdminId": "17032597",
         },
+        "Australian Amalgamated Terminals (AAT)": {
+            "itGlueId": "8261173",
+            "credentialsId": "21242437",
+            "localAdminId": "",
+        },
         // Add more company names and IDs here as needed
     };
 
