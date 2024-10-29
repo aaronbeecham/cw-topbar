@@ -177,6 +177,11 @@
             "credentialsId": "7571715",
             "localAdminId": "7488319",
         },
+        "Back to Back Financial Planners": {
+            "itGlueId": "8260789",
+            "credentialsId": "14265815",
+            "localAdminId": "",
+        },
         // Add more company names and IDs here as needed
     };
 
