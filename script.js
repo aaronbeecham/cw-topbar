@@ -187,6 +187,11 @@
             "credentialsId": "22578456",
             "localAdminId": "",
         },
+        "Mayo Hardware": {
+            "itGlueId": "8260981",
+            "credentialsId": "3473633",
+            "localAdminId": "4515782",
+        },
         // Add more company names and IDs here as needed
     };
 
