@@ -147,9 +147,9 @@
             "localAdminId": "24325209"
         },
         "Briemar Nominees Pty Ltd": {
-            "itGlueId": "8260800",
-            "credentialsId": "28452978",
-            "localAdminId": "26985042",
+            "itGlueId": "8260810",
+            "credentialsId": "16884291",
+            "localAdminId": "",
         },
         "ROC Partners Pty Limited": {
             "itGlueId": "3010977",
