@@ -192,6 +192,11 @@
             "credentialsId": "3473633",
             "localAdminId": "4515782",
         },
+        "Procurement Australia": {
+            "itGlueId": "8261043",
+            "credentialsId": "7082834",
+            "localAdminId": "18916698",
+        },
         // Add more company names and IDs here as needed
     };
 
