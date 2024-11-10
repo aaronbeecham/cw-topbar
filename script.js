@@ -99,7 +99,7 @@
         "Curijo Pty Ltd": {
             "itGlueId": "8260839",
             "credentialsId": "14277889",
-            "localAdminId": ""
+            "localAdminId": "15820693"
         },
         "My Gateway": {
             "itGlueId": "8261000",
