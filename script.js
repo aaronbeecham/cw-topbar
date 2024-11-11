@@ -197,6 +197,11 @@
             "credentialsId": "7082834",
             "localAdminId": "18916698",
         },
+        "Splosh Australia": {
+            "itGlueId": "8261100",
+            "credentialsId": "27553102",
+            "localAdminId": "27417205",
+        },
         // Add more company names and IDs here as needed
     };
 
