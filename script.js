@@ -202,6 +202,11 @@
             "credentialsId": "27648201",
             "localAdminId": "27417205",
         },
+        "Air Affairs Australia": {
+            "itGlueId": "8260767",
+            "credentialsId": "23117487",
+            "localAdminId": "",
+        },
         // Add more company names and IDs here as needed
     };
 
