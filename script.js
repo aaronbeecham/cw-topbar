@@ -207,6 +207,11 @@
             "credentialsId": "23117487",
             "localAdminId": "",
         },
+        "Macedonian Welfare Association": {
+            "itGlueId": "8260970",
+            "credentialsId": "26043097",
+            "localAdminId": "25667020",
+        },
         // Add more company names and IDs here as needed
     };
 
