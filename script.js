@@ -212,6 +212,11 @@
             "credentialsId": "26043097",
             "localAdminId": "25667020",
         },
+        "VFX Print Group": {
+            "itGlueId": "8261137",
+            "credentialsId": "3663335",
+            "localAdminId": "4517162",
+        },
         // Add more company names and IDs here as needed
     };
 
