@@ -217,6 +217,11 @@
             "credentialsId": "3663335",
             "localAdminId": "4517162",
         },
+        "Cater & Blumer": {
+            "itGlueId": "8260815",
+            "credentialsId": "26927946",
+            "localAdminId": "27166668",
+        },
         // Add more company names and IDs here as needed
     };
 
