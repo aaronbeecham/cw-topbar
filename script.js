@@ -228,7 +228,7 @@
     // Function to add the custom buttons in the top bar
     function addCustomTopBar() {
         // Get the company name from the input field
-        const companyNameElement = document.querySelector('input.GL4OBY5BAVH.GL4OBY5BLVH.cw_company[type="text"]');
+        const companyNameElement = document.querySelector('input.GMDB3DUBKVH.GMDB3DUBFWH.cw_company[type="text"]');
         let companyName = companyNameElement ? companyNameElement.value.trim() : null;
 
         // Set the default base URL
