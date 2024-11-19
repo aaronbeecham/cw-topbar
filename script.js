@@ -53,7 +53,7 @@
         },
         "Chamberlains": {
             "itGlueId": "8260821",
-            "credentialsId": "2551350",
+            "credentialsId": "23003598",
             "localAdminId": "4515702"
         },
         "Axis Plumbing": {
