@@ -222,216 +222,250 @@
             "credentialsId": "26927946",
             "localAdminId": "27166668",
         },
+        "Jackson Ranch": {
+            "itGlueId": "8260790",
+            "credentialsId": "28603048",
+            "localAdminId": "4632827",
+        },
         // Add more company names and IDs here as needed
     };
 
-    // Function to add the custom buttons in the top bar
+    // Function to get hardcoded local time offsets
+    function getHardcodedTime(city, country) {
+        const cityOffsets = {
+            "Singapore": 8, // GMT+8
+            "Sydney": 11, // GMT+11 (with daylight saving)
+            "Brisbane": 10, // GMT+10
+            "Auckland": 13 // GMT+13 (with daylight saving)
+        };
+        const countryOffsets = {
+            "Australia": 11, // GMT+11 (default to Sydney timezone)
+            "New Zealand": 13, // GMT+13 (default to Auckland timezone)
+            "Singapore": 8 // GMT+8
+        };
+        let offset = cityOffsets[city];
+        if (offset === undefined && country) {
+            offset = countryOffsets[country];
+        }
+        if (offset !== undefined) {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const localTime = new Date(utc + (3600000 * offset));
+            return localTime.toTimeString().slice(0, 5);
+        }
+        return "Time unavailable";
+    }
+
+    // Function to get city and country from input fields
+    function getCityAndCountry() {
+        const cityElement = document.querySelector('input.cw_companyViewCity');
+        const countryElement = document.querySelector('input.cw_companyViewCountry');
+        const city = cityElement ? cityElement.value.trim() : null;
+        const country = countryElement ? countryElement.value.trim() : null;
+        return { city, country };
+    }
+
+    // Function to create or update the top bar
     function addCustomTopBar() {
-        // Get the company name from the input field
         const companyNameElement = document.querySelector('input.GMDB3DUBKVH.GMDB3DUBFWH.cw_company[type="text"]');
-        let companyName = companyNameElement ? companyNameElement.value.trim() : null;
+        const companyName = companyNameElement ? companyNameElement.value.trim() : null;
 
-        // Set the default base URL
-        const defaultBaseUrl = 'https://virtual-it-services.itglue.com/';
-
-        // Set the default URLs (for unknown companies)
-        const defaultItGlueUrl = defaultBaseUrl;
-        const defaultCredentialsUrl = defaultBaseUrl;
-        const defaultLocalAdminUrl = defaultBaseUrl;
-
-        // Retry if the company name is not detected right away
         if (!companyName) {
             console.log('Company name not detected, retrying...');
-            setTimeout(addCustomTopBar, 1000);  // Retry after 1 second if the company name is not found
+            setTimeout(addCustomTopBar, 1000);
             return;
         }
 
-        // Determine the URLs based on the company IDs
         const companyData = companyLinks[companyName];
-        const baseItGlueUrl = companyData && companyData.useGreenlightUrl ? 'https://greenlight-itc.itglue.com/' : defaultBaseUrl;
-        const itGlueUrl = companyData ? `${baseItGlueUrl}${companyData.itGlueId}` : defaultItGlueUrl;
-        const credentialsUrl = companyData && companyData.credentialsId ? `${baseItGlueUrl}${companyData.itGlueId}/passwords/${companyData.credentialsId}` : defaultCredentialsUrl;
-        const localAdminUrl = companyData && companyData.localAdminId ? `${baseItGlueUrl}${companyData.itGlueId}/passwords/${companyData.localAdminId}` : defaultLocalAdminUrl;
+        const baseUrl = companyData?.useGreenlightUrl
+            ? 'https://greenlight-itc.itglue.com/'
+            : 'https://virtual-it-services.itglue.com/';
+        const itGlueUrl = companyData?.itGlueId ? `${baseUrl}${companyData.itGlueId}` : baseUrl;
+        const credentialsUrl = companyData?.credentialsId
+            ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.credentialsId}`
+            : baseUrl;
+        const localAdminUrl = companyData?.localAdminId
+            ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.localAdminId}`
+            : baseUrl;
 
-        // Check if the top bar already exists
-        if (!document.getElementById('customTopBar')) {
-            // Create the top bar
-            const topBar = document.createElement('div');
+        // Create or update the top bar
+        let topBar = document.getElementById('customTopBar');
+        let timeBar = document.getElementById('localTimeBar');
+        if (!topBar) {
+            // Main Top Bar
+            topBar = document.createElement('div');
             topBar.id = 'customTopBar';
-            topBar.style.position = 'fixed';
-            topBar.style.top = '0';
-            topBar.style.backgroundColor = '#007bff';
-            topBar.style.color = '#fff';
-            topBar.style.height = '44px';
-            topBar.style.zIndex = '9999';  // Ensure it stays on top of other elements
-            topBar.style.display = 'flex';
-            topBar.style.alignItems = 'center';
-            topBar.style.justifyContent = 'center';
-            topBar.style.padding = '0 20px';  // Add buffer space around the sides of the buttons
-            topBar.style.borderRadius = '0 0 5px 5px';  // Optional: rounded corners at the bottom
-            topBar.style.cursor = 'move'; // Indicate that the bar is draggable
-            topBar.style.userSelect = 'none'; // Prevent text selection during drag
+            topBar.style = `
+                position: fixed;
+                top: 0;
+                background-color: #007bff;
+                color: white;
+                height: 44px;
+                width: auto;
+                display: flex;
+                align-items: center;
+                z-index: 9999;
+                padding: 0 36px;
+                border-radius: 0 0 5px 5px;
+                cursor: move;
+                user-select: none;
+                left: 50%;
+                transform: translateX(-50%);
+            `;
+            document.body.appendChild(topBar);
 
-            // Restore position from localStorage or center it
-            let storedPosition = localStorage.getItem('topBarPosition');
-            if (storedPosition !== null) {
-                topBar.style.left = `${storedPosition}px`;
-            } else {
-                // Center the top bar
-                topBar.style.left = '50%';
-                topBar.style.transform = 'translateX(-50%)';
-            }
+            // Local Time Bar
+            timeBar = document.createElement('div');
+            timeBar.id = 'localTimeBar';
+            timeBar.style = `
+                position: fixed;
+                top: 44px;
+                background-color: #0056b3;
+                color: white;
+                height: 22px;
+                width: auto;
+                padding: 0 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9998;
+                border-radius: 0 0 5px 5px;
+                left: 50%;
+                transform: translateX(-50%);
+            `;
+            document.body.appendChild(timeBar);
 
-            // Create left and right grab indicators
-            const leftGrab = document.createElement('div');
-            leftGrab.style.width = '10px';
-            leftGrab.style.height = '100%';
-            leftGrab.style.cursor = 'move';
-            leftGrab.style.display = 'flex';
-            leftGrab.style.alignItems = 'center';
-            leftGrab.style.justifyContent = 'center';
-            leftGrab.style.marginRight = '5px';
+            const timeDisplay = document.createElement('span');
+            timeDisplay.innerText = "Loading local time...";
+            timeBar.appendChild(timeDisplay);
 
-            const rightGrab = document.createElement('div');
-            rightGrab.style.width = '10px';
-            rightGrab.style.height = '100%';
-            rightGrab.style.cursor = 'move';
-            rightGrab.style.display = 'flex';
-            rightGrab.style.alignItems = 'center';
-            rightGrab.style.justifyContent = 'center';
-            rightGrab.style.marginLeft = '5px';
+            // Update Time Bar
+            updateLocalTime(timeDisplay);
 
-            // Use Unicode characters for grab indicators
-            leftGrab.innerHTML = '&#x2630;'; // Triple bar icon
-            rightGrab.innerHTML = '&#x2630;'; // Triple bar icon
-
-            leftGrab.style.color = '#fff';
-            rightGrab.style.color = '#fff';
-
-            // Variables for dragging
+            // Enable Dragging
             let isDragging = false;
             let startX = 0;
             let initialLeft = 0;
 
-            // Mouse event handlers for the grab indicators
-            function dragMouseDown(e) {
+            function onDragStart(e) {
                 isDragging = true;
                 startX = e.clientX;
                 initialLeft = topBar.offsetLeft;
-                topBar.style.transition = 'none'; // Disable transitions during drag
-                document.body.style.userSelect = 'none'; // Prevent text selection during drag
+                document.body.style.userSelect = 'none';
             }
 
-            function dragMouseMove(e) {
-                if (isDragging) {
-                    let deltaX = e.clientX - startX;
-                    let newLeft = initialLeft + deltaX;
-
-                    // Prevent the bar from moving off-screen
-                    const maxLeft = window.innerWidth - topBar.offsetWidth;
-                    if (newLeft < 0) newLeft = 0;
-                    if (newLeft > maxLeft) newLeft = maxLeft;
-
-                    topBar.style.left = `${newLeft}px`;
-                    topBar.style.transform = ''; // Remove transform when dragging
-                }
+            function onDragMove(e) {
+                if (!isDragging) return;
+                const deltaX = e.clientX - startX;
+                const newLeft = initialLeft + deltaX;
+                topBar.style.left = `${newLeft}px`;
+                timeBar.style.left = `${newLeft}px`;
             }
 
-            function dragMouseUp(e) {
-                if (isDragging) {
-                    isDragging = false;
-                    // Save the position to localStorage
-                    localStorage.setItem('topBarPosition', topBar.offsetLeft);
-                    topBar.style.transition = ''; // Re-enable transitions if any
-                    document.body.style.userSelect = ''; // Re-enable text selection
-                }
+            function onDragEnd() {
+                isDragging = false;
+                document.body.style.userSelect = '';
             }
 
-            // Attach event listeners to the grab indicators
-            leftGrab.addEventListener('mousedown', dragMouseDown);
-            rightGrab.addEventListener('mousedown', dragMouseDown);
-            document.addEventListener('mousemove', dragMouseMove);
-            document.addEventListener('mouseup', dragMouseUp);
+            const leftHandle = document.createElement('div');
+            leftHandle.style = `
+                width: 20px;
+                height: 100%;
+                cursor: move;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                left: 0;
+                font-size: 20px;
+                padding-left: 10px; // Add padding to the left side for extra spacing
+            `;
+            leftHandle.innerHTML = `&#x2630;`; // Triple bar icon
+            leftHandle.style.color = '#fff';
+            topBar.appendChild(leftHandle);
 
-            // Create the IT Glue Link button
-            const itGlueButton = document.createElement('button');
-            itGlueButton.id = 'itGlueButton';
-            itGlueButton.style.backgroundColor = '#fff';
-            itGlueButton.style.color = '#007bff';
-            itGlueButton.style.padding = '5px 10px';
-            itGlueButton.style.border = 'none';
-            itGlueButton.style.cursor = 'pointer';
-            itGlueButton.style.margin = '0 10px';
-            itGlueButton.innerText = 'IT Glue Link';
-            itGlueButton.onclick = function() {
-                window.open(itGlueUrl, '_blank');
-            };
+            const rightHandle = document.createElement('div');
+            rightHandle.style = `
+                width: 20px;
+                height: 100%;
+                cursor: move;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                right: 0;
+                font-size: 20px;
+                padding-right: 10px; // Add padding to the right side for extra spacing
+            `;
+            rightHandle.innerHTML = `&#x2630;`; // Triple bar icon
+            rightHandle.style.color = '#fff';
+            topBar.appendChild(rightHandle);
 
-            // Create the 365 Credentials button
-            const credentialsButton = document.createElement('button');
-            credentialsButton.id = 'credentialsButton';
-            credentialsButton.style.backgroundColor = '#fff';
-            credentialsButton.style.color = '#007bff';
-            credentialsButton.style.padding = '5px 10px';
-            credentialsButton.style.border = 'none';
-            credentialsButton.style.cursor = 'pointer';
-            credentialsButton.style.margin = '0 10px';
-            credentialsButton.innerText = '365 Credentials';
-            credentialsButton.onclick = function() {
-                window.open(credentialsUrl, '_blank');
-            };
 
-            // Create the Local Admin button
-            const localAdminButton = document.createElement('button');
-            localAdminButton.id = 'localAdminButton';
-            localAdminButton.style.backgroundColor = '#fff';
-            localAdminButton.style.color = '#007bff';
-            localAdminButton.style.padding = '5px 10px';
-            localAdminButton.style.border = 'none';
-            localAdminButton.style.cursor = 'pointer';
-            localAdminButton.style.margin = '0 10px';
-            localAdminButton.innerText = 'Local Admin';
-            localAdminButton.onclick = function() {
-                window.open(localAdminUrl, '_blank');
-            };
+            leftHandle.addEventListener('mousedown', onDragStart);
+            rightHandle.addEventListener('mousedown', onDragStart);
+            document.addEventListener('mousemove', onDragMove);
+            document.addEventListener('mouseup', onDragEnd);
 
-            // Create a container for the buttons
+            // Buttons
             const buttonContainer = document.createElement('div');
-            buttonContainer.style.display = 'flex';
-            buttonContainer.style.alignItems = 'center';
-            buttonContainer.style.justifyContent = 'center';
-
-            // Add buttons to the container
-            buttonContainer.appendChild(itGlueButton);
-            buttonContainer.appendChild(credentialsButton);
-            buttonContainer.appendChild(localAdminButton);
-
-            // Build the top bar
-            topBar.appendChild(leftGrab);
+            buttonContainer.style = "display: flex; align-items: center; justify-content: center; margin: auto;";
             topBar.appendChild(buttonContainer);
-            topBar.appendChild(rightGrab);
 
-            // Add the top bar to the page
-            document.body.insertBefore(topBar, document.body.firstChild);
-            document.body.style.paddingTop = '44px';
-        } else {
-            // Update the buttons' URLs if the company changes
-            const itGlueButton = document.getElementById('itGlueButton');
-            const credentialsButton = document.getElementById('credentialsButton');
-            const localAdminButton = document.getElementById('localAdminButton');
-            itGlueButton.onclick = function() {
-                window.open(itGlueUrl, '_blank');
-            };
-            credentialsButton.onclick = function() {
-                window.open(credentialsUrl, '_blank');
-            };
-            localAdminButton.onclick = function() {
-                window.open(localAdminUrl, '_blank');
-            };
+            const itGlueButton = document.createElement('button');
+            itGlueButton.innerText = 'IT Glue Link';
+            itGlueButton.style = `
+                background-color: white;
+                color: #007bff;
+                border: none;
+                margin: 0 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+            `;
+            itGlueButton.onclick = () => window.open(itGlueUrl, '_blank');
+            buttonContainer.appendChild(itGlueButton);
+
+            const credentialsButton = document.createElement('button');
+            credentialsButton.innerText = '365 Credentials';
+            credentialsButton.style = `
+                background-color: white;
+                color: #007bff;
+                border: none;
+                margin: 0 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+            `;
+            credentialsButton.onclick = () => window.open(credentialsUrl, '_blank');
+            buttonContainer.appendChild(credentialsButton);
+
+            const localAdminButton = document.createElement('button');
+            localAdminButton.innerText = 'Local Admin';
+            localAdminButton.style = `
+                background-color: white;
+                color: #007bff;
+                border: none;
+                margin: 0 5px;
+                padding: 5px 10px;
+                cursor: pointer;
+            `;
+            localAdminButton.onclick = () => window.open(localAdminUrl, '_blank');
+            buttonContainer.appendChild(localAdminButton);
         }
     }
 
-    // Continuously check every 5 seconds to ensure the top bar is present and updated
-    setInterval(addCustomTopBar, 5000);
+    // Update local time periodically
+    async function updateLocalTime(displayElement) {
+        const { city, country } = getCityAndCountry();
+        if (city || country) {
+            const localTime = getHardcodedTime(city, country);
+            displayElement.innerText = `Local Time: ${localTime}`;
+        } else {
+            displayElement.innerText = "City or Country not detected";
+        }
+        setTimeout(() => updateLocalTime(displayElement), 60000);
+    }
 
+    // Initialize the custom top bar immediately and retry every second
+    addCustomTopBar();
+    setInterval(addCustomTopBar, 1000);
 })();
