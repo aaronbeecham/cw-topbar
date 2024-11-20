@@ -227,8 +227,13 @@
             "credentialsId": "28603048",
             "localAdminId": "4632827",
         },
-        // Add more company names and IDs here as needed
+
     };
+
+    // Declare variables at the top scope
+    let previousCompanyName = null;
+    let topBar, timeBar;
+    let itGlueButton, credentialsButton, localAdminButton;
 
     // Function to get hardcoded local time offsets based on state, postcode, or country
     function getHardcodedTime(state, postcode, country) {
