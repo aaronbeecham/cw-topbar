@@ -1,6 +1,6 @@
 // companyLinks.js
 
-const companyLinks = {
+var companyLinks = {
     "Family Services Australia (FSA)": {
         "itGlueId": "8260864",
         "credentialsId": "8576248",
