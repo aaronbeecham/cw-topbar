@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Top Bar
 // @namespace    http://tampermonkey.net/
-// @version      3.1
+// @version      3.3
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
@@ -226,7 +226,7 @@
             "itGlueId": "8260790",
             "credentialsId": "28603048",
             "localAdminId": "4632827"
-        }
+        },
         // Add more company names and IDs here as needed
     };
 
@@ -374,7 +374,7 @@
                     z-index: 9998;
                     border-radius: 0 0 5px 5px;
                     left: ${topBar.style.left};
-                    transform: ${topBar.style.transform};
+                    transform: translateX(0);
                 `;
                 document.body.appendChild(timeBar);
 
@@ -393,7 +393,7 @@
                 function onDragStart(e) {
                     isDragging = true;
                     startX = e.clientX;
-                    initialLeft = topBar.offsetLeft;
+                    initialLeft = parseInt(topBar.style.left.replace('px', ''));
                     document.body.style.userSelect = 'none';
                 }
 
@@ -403,7 +403,12 @@
                     const newLeft = initialLeft + deltaX;
                     topBar.style.left = `${newLeft}px`;
                     topBar.style.transform = `translateX(0)`; // Disable centering when dragging
-                    timeBar.style.left = `${newLeft}px`;
+
+                    // Update timeBar position to stay attached and centered to the top bar
+                    const topBarWidth = topBar.offsetWidth;
+                    const timeBarWidth = timeBar.offsetWidth;
+                    const timeBarLeft = newLeft + (topBarWidth / 2) - (timeBarWidth / 2);
+                    timeBar.style.left = `${timeBarLeft}px`;
                     timeBar.style.transform = `translateX(0)`;
                 }
 
