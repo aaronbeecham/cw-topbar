@@ -1,0 +1,66 @@
+// ==UserScript==
+// @name         Top Bar Loader NEW
+// @namespace    http://tampermonkey.net/
+// @match        https://aus.myconnectwise.net/*
+// @grant        GM_xmlhttpRequest
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @connect      raw.githubusercontent.com
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    const SCRIPT_URL = 'https://raw.githubusercontent.com/aaronbeecham/cw-topbar/main/script.js';
+    const UPDATE_INTERVAL = 60 * 60 * 1000; // 1 hour in milliseconds
+    const LAST_UPDATE_KEY = 'lastUpdateTimestamp';
+    const SCRIPT_CONTENT_KEY = 'scriptContent';
+
+    // Get the last update timestamp
+    let lastUpdate = GM_getValue(LAST_UPDATE_KEY, 0);
+    let now = Date.now();
+
+    function executeScript(scriptContent) {
+        // Evaluate the script content
+        try {
+            eval(scriptContent);
+        } catch (e) {
+            console.error('Error executing script.js:', e);
+        }
+    }
+
+    function fetchScriptAndExecute() {
+        GM_xmlhttpRequest({
+            method: 'GET',
+            url: SCRIPT_URL + '?_=' + now, // Cache buster to prevent caching
+            onload: function(response) {
+                if (response.status === 200) {
+                    let scriptContent = response.responseText;
+                    // Save script content and timestamp
+                    GM_setValue(SCRIPT_CONTENT_KEY, scriptContent);
+                    GM_setValue(LAST_UPDATE_KEY, now);
+                    executeScript(scriptContent);
+                } else {
+                    console.error('Failed to load script.js:', response.statusText);
+                }
+            },
+            onerror: function(error) {
+                console.error('Error loading script.js:', error);
+            }
+        });
+    }
+
+    // Check if it's time to update the script
+    if (now - lastUpdate > UPDATE_INTERVAL) {
+        fetchScriptAndExecute();
+    } else {
+        // Use cached script content
+        let scriptContent = GM_getValue(SCRIPT_CONTENT_KEY, '');
+        if (scriptContent) {
+            executeScript(scriptContent);
+        } else {
+            // No cached content, fetch script
+            fetchScriptAndExecute();
+        }
+    }
+})();
