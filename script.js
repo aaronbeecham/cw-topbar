@@ -230,39 +230,67 @@
         // Add more company names and IDs here as needed
     };
 
-    // Function to get hardcoded local time offsets
-    function getHardcodedTime(city, country) {
-        const cityOffsets = {
-            "Singapore": 8, // GMT+8
-            "Sydney": 11, // GMT+11 (with daylight saving)
-            "Brisbane": 10, // GMT+10
-            "Auckland": 13 // GMT+13 (with daylight saving)
+    // Function to get hardcoded local time offsets based on state, postcode, or country
+    function getHardcodedTime(state, postcode, country) {
+        const stateOffsets = {
+            "NSW": 11,   // AEDT (UTC+11)
+            "ACT": 11,   // AEDT (UTC+11)
+            "VIC": 11,   // AEDT (UTC+11)
+            "TAS": 11,   // AEDT (UTC+11)
+            "QLD": 10,   // AEST (UTC+10)
+            "SA": 10.5,  // ACDT (UTC+10.5)
+            "NT": 9.5,   // ACST (UTC+9.5)
+            "WA": 8      // AWST (UTC+8)
         };
+
+        const postcodeOffsets = {
+            "0": 11,     // NSW/ACT
+            "1": 11,     // NSW/ACT
+            "2": 11,     // NSW/ACT
+            "3": 11,     // VIC
+            "4": 10,     // QLD
+            "5": 10.5,   // SA
+            "6": 8,      // WA
+            "7": 11,     // TAS
+            "8": 9.5,    // NT
+            "9": 10.5    // SA
+        };
+
         const countryOffsets = {
-            "Australia": 11, // GMT+11 (default to Sydney timezone)
-            "New Zealand": 13, // GMT+13 (default to Auckland timezone)
-            "Singapore": 8 // GMT+8
+            "Australia": 11,   // Default to AEDT (UTC+11)
+            "Singapore": 8     // SGT (UTC+8)
+            // Add more countries as needed
         };
-        let offset = cityOffsets[city];
-        if (offset === undefined && country) {
+
+        let offset;
+
+        if (state && stateOffsets[state.toUpperCase()]) {
+            offset = stateOffsets[state.toUpperCase()];
+        } else if (postcode && postcode[0] && postcodeOffsets[postcode[0]]) {
+            offset = postcodeOffsets[postcode[0]];
+        } else if (country && countryOffsets[country]) {
             offset = countryOffsets[country];
         }
+
         if (offset !== undefined) {
             const now = new Date();
             const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
             const localTime = new Date(utc + (3600000 * offset));
             return localTime.toTimeString().slice(0, 5);
         }
+
         return "Time unavailable";
     }
 
-    // Function to get city and country from input fields
-    function getCityAndCountry() {
-        const cityElement = document.querySelector('input.cw_companyViewCity');
+    // Function to get state, postcode, and country from input fields
+    function getStatePostcodeCountry() {
+        const stateElement = document.querySelector('input.cw_companyViewState');
+        const postcodeElement = document.querySelector('input.cw_companyViewZip');
         const countryElement = document.querySelector('input.cw_companyViewCountry');
-        const city = cityElement ? cityElement.value.trim() : null;
+        const state = stateElement ? stateElement.value.trim() : null;
+        const postcode = postcodeElement ? postcodeElement.value.trim() : null;
         const country = countryElement ? countryElement.value.trim() : null;
-        return { city, country };
+        return { state, postcode, country };
     }
 
     // Function to create or update the top bar
@@ -276,196 +304,211 @@
             return;
         }
 
-        const companyData = companyLinks[companyName];
-        const baseUrl = companyData?.useGreenlightUrl
-            ? 'https://greenlight-itc.itglue.com/'
-            : 'https://virtual-it-services.itglue.com/';
-        const itGlueUrl = companyData?.itGlueId ? `${baseUrl}${companyData.itGlueId}` : baseUrl;
-        const credentialsUrl = companyData?.credentialsId
-            ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.credentialsId}`
-            : baseUrl;
-        const localAdminUrl = companyData?.localAdminId
-            ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.localAdminId}`
-            : baseUrl;
+        // Only proceed if the company name has changed
+        if (companyName !== previousCompanyName) {
+            previousCompanyName = companyName;
 
-        // Create or update the top bar
-        let topBar = document.getElementById('customTopBar');
-        let timeBar = document.getElementById('localTimeBar');
-        if (!topBar) {
-            // Main Top Bar
-            topBar = document.createElement('div');
-            topBar.id = 'customTopBar';
-            topBar.style = `
-                position: fixed;
-                top: 0;
-                background-color: #007bff;
-                color: white;
-                height: 44px;
-                width: auto;
-                display: flex;
-                align-items: center;
-                z-index: 9999;
-                padding: 0 36px;
-                border-radius: 0 0 5px 5px;
-                cursor: move;
-                user-select: none;
-                left: 50%;
-                transform: translateX(-50%);
-            `;
-            document.body.appendChild(topBar);
+            const companyData = companyLinks[companyName];
+            const baseUrl = companyData?.useGreenlightUrl
+                ? 'https://greenlight-itc.itglue.com/'
+                : 'https://virtual-it-services.itglue.com/';
+            const itGlueUrl = companyData?.itGlueId ? `${baseUrl}${companyData.itGlueId}` : baseUrl;
+            const credentialsUrl = companyData?.credentialsId
+                ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.credentialsId}`
+                : baseUrl;
+            const localAdminUrl = companyData?.localAdminId
+                ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.localAdminId}`
+                : baseUrl;
 
-            // Local Time Bar
-            timeBar = document.createElement('div');
-            timeBar.id = 'localTimeBar';
-            timeBar.style = `
-                position: fixed;
-                top: 44px;
-                background-color: #0056b3;
-                color: white;
-                height: 22px;
-                width: auto;
-                padding: 0 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                z-index: 9998;
-                border-radius: 0 0 5px 5px;
-                left: 50%;
-                transform: translateX(-50%);
-            `;
-            document.body.appendChild(timeBar);
+            // If the top bar doesn't exist, create it
+            if (!topBar) {
+                // Main Top Bar
+                topBar = document.createElement('div');
+                topBar.id = 'customTopBar';
+                topBar.style = `
+                    position: fixed;
+                    top: 0;
+                    background-color: #007bff;
+                    color: white;
+                    height: 44px;
+                    width: auto;
+                    display: flex;
+                    align-items: center;
+                    z-index: 9999;
+                    padding: 0 36px;
+                    border-radius: 0 0 5px 5px;
+                    cursor: move;
+                    user-select: none;
+                    left: 50%;
+                    transform: translateX(-50%);
+                `;
 
-            const timeDisplay = document.createElement('span');
-            timeDisplay.innerText = "Loading local time...";
-            timeBar.appendChild(timeDisplay);
+                // Restore position from localStorage if available
+                const savedPosition = localStorage.getItem('customTopBarPosition');
+                if (savedPosition) {
+                    topBar.style.left = `${savedPosition}px`;
+                    topBar.style.transform = `translateX(0)`; // Disable centering if position is set
+                }
 
-            // Update Time Bar
-            updateLocalTime(timeDisplay);
+                document.body.appendChild(topBar);
 
-            // Enable Dragging
-            let isDragging = false;
-            let startX = 0;
-            let initialLeft = 0;
+                // Local Time Bar
+                timeBar = document.createElement('div');
+                timeBar.id = 'localTimeBar';
+                timeBar.style = `
+                    position: fixed;
+                    top: 44px;
+                    background-color: #0056b3;
+                    color: white;
+                    height: 22px;
+                    width: auto;
+                    padding: 0 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 9998;
+                    border-radius: 0 0 5px 5px;
+                    left: ${topBar.style.left};
+                    transform: ${topBar.style.transform};
+                `;
+                document.body.appendChild(timeBar);
 
-            function onDragStart(e) {
-                isDragging = true;
-                startX = e.clientX;
-                initialLeft = topBar.offsetLeft;
-                document.body.style.userSelect = 'none';
+                const timeDisplay = document.createElement('span');
+                timeDisplay.innerText = "Loading local time...";
+                timeBar.appendChild(timeDisplay);
+
+                // Update Time Bar
+                updateLocalTime(timeDisplay);
+
+                // Enable Dragging
+                let isDragging = false;
+                let startX = 0;
+                let initialLeft = 0;
+
+                function onDragStart(e) {
+                    isDragging = true;
+                    startX = e.clientX;
+                    initialLeft = topBar.offsetLeft;
+                    document.body.style.userSelect = 'none';
+                }
+
+                function onDragMove(e) {
+                    if (!isDragging) return;
+                    const deltaX = e.clientX - startX;
+                    const newLeft = initialLeft + deltaX;
+                    topBar.style.left = `${newLeft}px`;
+                    topBar.style.transform = `translateX(0)`; // Disable centering when dragging
+                    timeBar.style.left = `${newLeft}px`;
+                    timeBar.style.transform = `translateX(0)`;
+                }
+
+                function onDragEnd() {
+                    isDragging = false;
+                    document.body.style.userSelect = '';
+                    // Save position to localStorage
+                    localStorage.setItem('customTopBarPosition', topBar.style.left.replace('px', ''));
+                }
+
+                const leftHandle = document.createElement('div');
+                leftHandle.style = `
+                    width: 20px;
+                    height: 100%;
+                    cursor: move;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    left: 0;
+                    font-size: 20px;
+                    padding-left: 10px;
+                `;
+                leftHandle.innerHTML = `&#x2630;`;
+                leftHandle.style.color = '#fff';
+                topBar.appendChild(leftHandle);
+
+                const rightHandle = document.createElement('div');
+                rightHandle.style = `
+                    width: 20px;
+                    height: 100%;
+                    cursor: move;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    right: 0;
+                    font-size: 20px;
+                    padding-right: 10px;
+                `;
+                rightHandle.innerHTML = `&#x2630;`;
+                rightHandle.style.color = '#fff';
+                topBar.appendChild(rightHandle);
+
+                leftHandle.addEventListener('mousedown', onDragStart);
+                rightHandle.addEventListener('mousedown', onDragStart);
+                document.addEventListener('mousemove', onDragMove);
+                document.addEventListener('mouseup', onDragEnd);
+
+                // Buttons
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style = "display: flex; align-items: center; justify-content: center; margin: auto;";
+                topBar.appendChild(buttonContainer);
+
+                itGlueButton = document.createElement('button');
+                itGlueButton.innerText = 'IT Glue Link';
+                itGlueButton.style = `
+                    background-color: white;
+                    color: #007bff;
+                    border: none;
+                    margin: 0 5px;
+                    padding: 5px 10px;
+                    cursor: pointer;
+                `;
+                buttonContainer.appendChild(itGlueButton);
+
+                credentialsButton = document.createElement('button');
+                credentialsButton.innerText = '365 Credentials';
+                credentialsButton.style = `
+                    background-color: white;
+                    color: #007bff;
+                    border: none;
+                    margin: 0 5px;
+                    padding: 5px 10px;
+                    cursor: pointer;
+                `;
+                buttonContainer.appendChild(credentialsButton);
+
+                localAdminButton = document.createElement('button');
+                localAdminButton.innerText = 'Local Admin';
+                localAdminButton.style = `
+                    background-color: white;
+                    color: #007bff;
+                    border: none;
+                    margin: 0 5px;
+                    padding: 5px 10px;
+                    cursor: pointer;
+                `;
+                buttonContainer.appendChild(localAdminButton);
             }
 
-            function onDragMove(e) {
-                if (!isDragging) return;
-                const deltaX = e.clientX - startX;
-                const newLeft = initialLeft + deltaX;
-                topBar.style.left = `${newLeft}px`;
-                timeBar.style.left = `${newLeft}px`;
-            }
-
-            function onDragEnd() {
-                isDragging = false;
-                document.body.style.userSelect = '';
-            }
-
-            const leftHandle = document.createElement('div');
-            leftHandle.style = `
-                width: 20px;
-                height: 100%;
-                cursor: move;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: absolute;
-                left: 0;
-                font-size: 20px;
-                padding-left: 10px; // Add padding to the left side for extra spacing
-            `;
-            leftHandle.innerHTML = `&#x2630;`; // Triple bar icon
-            leftHandle.style.color = '#fff';
-            topBar.appendChild(leftHandle);
-
-            const rightHandle = document.createElement('div');
-            rightHandle.style = `
-                width: 20px;
-                height: 100%;
-                cursor: move;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: absolute;
-                right: 0;
-                font-size: 20px;
-                padding-right: 10px; // Add padding to the right side for extra spacing
-            `;
-            rightHandle.innerHTML = `&#x2630;`; // Triple bar icon
-            rightHandle.style.color = '#fff';
-            topBar.appendChild(rightHandle);
-
-
-            leftHandle.addEventListener('mousedown', onDragStart);
-            rightHandle.addEventListener('mousedown', onDragStart);
-            document.addEventListener('mousemove', onDragMove);
-            document.addEventListener('mouseup', onDragEnd);
-
-            // Buttons
-            const buttonContainer = document.createElement('div');
-            buttonContainer.style = "display: flex; align-items: center; justify-content: center; margin: auto;";
-            topBar.appendChild(buttonContainer);
-
-            const itGlueButton = document.createElement('button');
-            itGlueButton.innerText = 'IT Glue Link';
-            itGlueButton.style = `
-                background-color: white;
-                color: #007bff;
-                border: none;
-                margin: 0 5px;
-                padding: 5px 10px;
-                cursor: pointer;
-            `;
+            // Update button onclick handlers with the new URLs
             itGlueButton.onclick = () => window.open(itGlueUrl, '_blank');
-            buttonContainer.appendChild(itGlueButton);
-
-            const credentialsButton = document.createElement('button');
-            credentialsButton.innerText = '365 Credentials';
-            credentialsButton.style = `
-                background-color: white;
-                color: #007bff;
-                border: none;
-                margin: 0 5px;
-                padding: 5px 10px;
-                cursor: pointer;
-            `;
             credentialsButton.onclick = () => window.open(credentialsUrl, '_blank');
-            buttonContainer.appendChild(credentialsButton);
-
-            const localAdminButton = document.createElement('button');
-            localAdminButton.innerText = 'Local Admin';
-            localAdminButton.style = `
-                background-color: white;
-                color: #007bff;
-                border: none;
-                margin: 0 5px;
-                padding: 5px 10px;
-                cursor: pointer;
-            `;
             localAdminButton.onclick = () => window.open(localAdminUrl, '_blank');
-            buttonContainer.appendChild(localAdminButton);
         }
     }
 
     // Update local time periodically
     async function updateLocalTime(displayElement) {
-        const { city, country } = getCityAndCountry();
-        if (city || country) {
-            const localTime = getHardcodedTime(city, country);
+        const { state, postcode, country } = getStatePostcodeCountry();
+        if (state || postcode || country) {
+            const localTime = getHardcodedTime(state, postcode, country);
             displayElement.innerText = `Local Time: ${localTime}`;
         } else {
-            displayElement.innerText = "City or Country not detected";
+            displayElement.innerText = "Location not detected";
         }
         setTimeout(() => updateLocalTime(displayElement), 60000);
     }
 
-    // Initialize the custom top bar immediately and retry every second
-    addCustomTopBar();
+    // Initialize the custom top bar and check for company changes every second
     setInterval(addCustomTopBar, 1000);
 })();
