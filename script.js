@@ -227,6 +227,11 @@
             "credentialsId": "28603048",
             "localAdminId": "4632827"
         },
+        "Carey Group": {
+            "itGlueId": "7203740",
+            "credentialsId": "15492086",
+            "localAdminId": "27649533"
+        },
         // Add more company names and IDs here as needed
     };
 
