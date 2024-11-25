@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Top Bar
 // @namespace    http://tampermonkey.net/
-// @version      3.4
+// @version      3.3
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
@@ -233,7 +233,7 @@
     // Declare variables at the top scope
     let previousCompanyName = null;
     let topBar, timeBar;
-    let itGlueButton, credentialsButton, localAdminButton, callLink;
+    let itGlueButton, credentialsButton, localAdminButton;
 
     // Function to get hardcoded local time offsets based on state, postcode, or country
     function getHardcodedTime(state, postcode, country) {
@@ -296,61 +296,6 @@
         const postcode = postcodeElement ? postcodeElement.value.trim() : null;
         const country = countryElement ? countryElement.value.trim() : null;
         return { state, postcode, country };
-    }
-
-    // Function to get the phone number from the page
-    function getPhoneNumber() {
-        let phoneInput = document.querySelector('input.cw_companyViewPhone');
-        if (phoneInput) {
-            return phoneInput.value.trim();
-        }
-
-        phoneInput = document.querySelector('input.GMDB3DUBCEI.GMDB3DUBIDI');
-        if (phoneInput) {
-            return phoneInput.value.trim();
-        }
-
-        // Try to find input field with label 'Phone'
-        const labels = document.querySelectorAll('label');
-        for (const label of labels) {
-            if (label.innerText.trim().toLowerCase() === 'phone') {
-                const input = label.parentElement.querySelector('input[type="text"]');
-                if (input) {
-                    return input.value.trim();
-                }
-            }
-        }
-
-        // Try to find input field with placeholder 'Phone' or 'Phone Number'
-        phoneInput = document.querySelector('input[placeholder="Phone"], input[placeholder="Phone Number"]');
-        if (phoneInput) {
-            return phoneInput.value.trim();
-        }
-
-        // As a last resort, try to find input field with maxlength="20" that contains a phone number
-        const inputs = document.querySelectorAll('input[type="text"][maxlength="20"]');
-        for (const input of inputs) {
-            if (input.value.trim().match(/^\+?\d+/)) {
-                return input.value.trim();
-            }
-        }
-
-        return null;
-    }
-
-    // Function to update the call button's href
-    function updateCallButton() {
-        const phoneNumber = getPhoneNumber();
-        if (phoneNumber) {
-            callLink.href = `tel:${phoneNumber}`;
-            callLink.onclick = null;
-        } else {
-            callLink.href = '#';
-            callLink.onclick = (e) => {
-                e.preventDefault();
-                alert('Phone number not found');
-            };
-        }
     }
 
     // Function to create or update the top bar
@@ -553,30 +498,12 @@
                     cursor: pointer;
                 `;
                 buttonContainer.appendChild(localAdminButton);
-
-                // Call Button
-                callLink = document.createElement('a');
-                callLink.innerText = '📞 Call';
-                callLink.style = `
-                    background-color: white;
-                    color: #007bff;
-                    border: none;
-                    margin: 0 5px;
-                    padding: 5px 10px;
-                    cursor: pointer;
-                    text-decoration: none;
-                    display: inline-block;
-                `;
-                buttonContainer.appendChild(callLink);
             }
 
             // Update button onclick handlers with the new URLs
             itGlueButton.onclick = () => window.open(itGlueUrl, '_blank');
             credentialsButton.onclick = () => window.open(credentialsUrl, '_blank');
             localAdminButton.onclick = () => window.open(localAdminUrl, '_blank');
-
-            // Update Call Button
-            updateCallButton();
         }
     }
 
