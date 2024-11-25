@@ -232,6 +232,11 @@
             "credentialsId": "15492086",
             "localAdminId": "27649533"
         },
+        "IMO Carwash Australasia": {
+            "itGlueId": "8260913",
+            "credentialsId": "18486608",
+            "localAdminId": " "
+        },
         // Add more company names and IDs here as needed
     };
 
