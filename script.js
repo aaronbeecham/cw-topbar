@@ -237,6 +237,41 @@
             "credentialsId": "18486608",
             "localAdminId": " "
         },
+        "Mia Passenger Express P/L": {
+            "itGlueId": "8260988",
+            "credentialsId": "5988631",
+            "localAdminId": "24574921"
+        },
+        "Hillston Medical Centre": {
+            "itGlueId": "8260903",
+            "credentialsId": "10609755",
+            "localAdminId": "13653232"
+        },
+        "GB Sports": {
+            "itGlueId": "8260880",
+            "credentialsId": "5987544",
+            "localAdminId": " "
+        },
+        "Grants Sawmilling Co": {
+            "itGlueId": "8260889",
+            "credentialsId": "6915823",
+            "localAdminId": "13356091"
+        },
+        "David Davidge": {
+            "itGlueId": "8260843",
+            "credentialsId": "6672179",
+            "localAdminId": "13918204"
+        },
+        "Nugan Estate Wines": {
+            "itGlueId": "3614543",
+            "credentialsId": "7001345",
+            "localAdminId": "19082437"
+        },
+        "Mackenzie & Vardanega": {
+            "itGlueId": "8260971",
+            "credentialsId": "6689689",
+            "localAdminId": "18171868"
+        },
         // Add more company names and IDs here as needed
     };
 
