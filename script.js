@@ -79,7 +79,7 @@
         "Girl Guides NSW, ACT & NT": {
             "itGlueId": "8260882",
             "credentialsId": "20606178",
-            "localAdminId": ""
+            "localAdminId": "20819381"
         },
         "Endotherapeutics Pty Ltd": {
             "itGlueId": "8260859",
