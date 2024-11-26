@@ -277,6 +277,11 @@
             "credentialsId": "10619490",
             "localAdminId": "10720221"
         },
+        "Swift Metal Australia": {
+            "itGlueId": "8261111",
+            "credentialsId": "25209230",
+            "localAdminId": "16867316"
+        },
         // Add more company names and IDs here as needed
     };
 
