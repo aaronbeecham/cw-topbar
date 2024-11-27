@@ -282,6 +282,11 @@
             "credentialsId": "25209230",
             "localAdminId": "16867316"
         },
+        "Cox Sherlock Accountants": {
+            "itGlueId": "5408382",
+            "credentialsId": "13761505",
+            "localAdminId": "22372607"
+        },
         // Add more company names and IDs here as needed
     };
 
