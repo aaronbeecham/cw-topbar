@@ -287,6 +287,11 @@
             "credentialsId": "13761505",
             "localAdminId": "22372607"
         },
+        "Leeton Soldiers Club": {
+            "itGlueId": "8260952",
+            "credentialsId": "8061470",
+            "localAdminId": " "
+        },
         // Add more company names and IDs here as needed
     };
 
