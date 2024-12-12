@@ -292,6 +292,11 @@
             "credentialsId": "8061470",
             "localAdminId": " "
         },
+        "Insurance Council Of Australia": {
+            "itGlueId": "8260921",
+            "credentialsId": "25427385",
+            "localAdminId": "25427205"
+        },
         // Add more company names and IDs here as needed
     };
 
