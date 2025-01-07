@@ -297,6 +297,11 @@
             "credentialsId": "25427385",
             "localAdminId": "25427205"
         },
+        "LJH Belconnen": {
+            "itGlueId": "8260964",
+            "credentialsId": "18373219",
+            "localAdminId": "21260862"
+        },
         // Add more company names and IDs here as needed
     };
 
