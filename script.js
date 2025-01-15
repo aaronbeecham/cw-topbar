@@ -302,6 +302,11 @@
             "credentialsId": "18373219",
             "localAdminId": "21260862"
         },
+        "Patrick Dawson Law": {
+            "itGlueId": "8261030",
+            "credentialsId": "20575150",
+            "localAdminId": "20084383"
+        },
         // Add more company names and IDs here as needed
     };
 
