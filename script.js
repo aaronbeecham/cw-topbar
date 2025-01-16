@@ -312,6 +312,11 @@
             "credentialsId": "14265704",
             "localAdminId": "21510050"
         },
+        "Rapid Clean Griffith": {
+            "itGlueId": "8261054",
+            "credentialsId": "14471557",
+            "localAdminId": "19985782"
+        },
         // Add more company names and IDs here as needed
     };
 
