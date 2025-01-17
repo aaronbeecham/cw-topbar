@@ -317,6 +317,11 @@
             "credentialsId": "14471557",
             "localAdminId": "19985782"
         },
+        "AFPA - Australian Forest Products Association": {
+            "itGlueId": "8260766",
+            "credentialsId": "14265641",
+            "localAdminId": "28863397"
+        },
         // Add more company names and IDs here as needed
     };
 
