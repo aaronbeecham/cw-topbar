@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Top Bar
 // @namespace    http://tampermonkey.net/
-// @version      3.4
+// @version      3.3
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
@@ -303,6 +303,11 @@
             "localAdminId": "21260862"
         },
         "Patrick Dawson Law": {
+            "itGlueId": "8261030",
+            "credentialsId": "20575150",
+            "localAdminId": "20084383"
+        },
+        "Patrick Dawson Law": {
             "itGlueId": "5408362",
             "credentialsId": "14265704",
             "localAdminId": "21510050"
@@ -317,21 +322,7 @@
             "credentialsId": "14265641",
             "localAdminId": "28863397"
         },
-        "Yellow Canary": {
-            "itGlueId": "6770954",
-            "credentialsId": "22557394",
-            "localAdminId": "23394798"
-            "useEvologicUrl": true
-        },
-        // Example usage for Evologic:
-        /*
-        "Example Company": {
-            "itGlueId": "1234567",
-            "credentialsId": "7654321",
-            "localAdminId": "11223344",
-            "useEvologicUrl": true
-        },
-        */
+        // Add more company names and IDs here as needed
     };
 
     // Declare variables at the top scope
@@ -418,25 +409,15 @@
             previousCompanyName = companyName;
 
             const companyData = companyLinks[companyName];
-
-            // Determine which baseUrl to use
-            let baseUrl = 'https://virtual-it-services.itglue.com/';
-            if (companyData?.useGreenlightUrl) {
-                baseUrl = 'https://greenlight-itc.itglue.com/';
-            } else if (companyData?.useEvologicUrl) {
-                baseUrl = 'https://evologic.itglue.com/';
-            }
-
-            const itGlueUrl = companyData?.itGlueId
-                ? `${baseUrl}${companyData.itGlueId}`
-                : baseUrl;
-
+            const baseUrl = companyData?.useGreenlightUrl
+                ? 'https://greenlight-itc.itglue.com/'
+                : 'https://virtual-it-services.itglue.com/';
+            const itGlueUrl = companyData?.itGlueId ? ${baseUrl}${companyData.itGlueId} : baseUrl;
             const credentialsUrl = companyData?.credentialsId
-                ? `${baseUrl}${companyData?.itGlueId}/passwords/${companyData.credentialsId}`
+                ? ${baseUrl}${companyData.itGlueId}/passwords/${companyData.credentialsId}
                 : baseUrl;
-
             const localAdminUrl = companyData?.localAdminId
-                ? `${baseUrl}${companyData?.itGlueId}/passwords/${companyData.localAdminId}`
+                ? ${baseUrl}${companyData.itGlueId}/passwords/${companyData.localAdminId}
                 : baseUrl;
 
             // If the top bar doesn't exist, create it
@@ -444,7 +425,7 @@
                 // Main Top Bar
                 topBar = document.createElement('div');
                 topBar.id = 'customTopBar';
-                topBar.style = `
+                topBar.style = 
                     position: fixed;
                     top: 0;
                     background-color: #007bff;
@@ -460,13 +441,13 @@
                     user-select: none;
                     left: 50%;
                     transform: translateX(-50%);
-                `;
+                ;
 
                 // Restore position from localStorage if available
                 const savedPosition = localStorage.getItem('customTopBarPosition');
                 if (savedPosition) {
-                    topBar.style.left = `${savedPosition}px`;
-                    topBar.style.transform = `translateX(0)`; // Disable centering if position is set
+                    topBar.style.left = ${savedPosition}px;
+                    topBar.style.transform = translateX(0); // Disable centering if position is set
                 }
 
                 document.body.appendChild(topBar);
@@ -474,7 +455,7 @@
                 // Local Time Bar
                 timeBar = document.createElement('div');
                 timeBar.id = 'localTimeBar';
-                timeBar.style = `
+                timeBar.style = 
                     position: fixed;
                     top: 44px;
                     background-color: #0056b3;
@@ -489,7 +470,7 @@
                     border-radius: 0 0 5px 5px;
                     left: ${topBar.style.left};
                     transform: translateX(0);
-                `;
+                ;
                 document.body.appendChild(timeBar);
 
                 const timeDisplay = document.createElement('span');
@@ -515,15 +496,15 @@
                     if (!isDragging) return;
                     const deltaX = e.clientX - startX;
                     const newLeft = initialLeft + deltaX;
-                    topBar.style.left = `${newLeft}px`;
-                    topBar.style.transform = `translateX(0)`; // Disable centering when dragging
+                    topBar.style.left = ${newLeft}px;
+                    topBar.style.transform = translateX(0); // Disable centering when dragging
 
                     // Update timeBar position to stay attached and centered to the top bar
                     const topBarWidth = topBar.offsetWidth;
                     const timeBarWidth = timeBar.offsetWidth;
                     const timeBarLeft = newLeft + (topBarWidth / 2) - (timeBarWidth / 2);
-                    timeBar.style.left = `${timeBarLeft}px`;
-                    timeBar.style.transform = `translateX(0)`;
+                    timeBar.style.left = ${timeBarLeft}px;
+                    timeBar.style.transform = translateX(0);
                 }
 
                 function onDragEnd() {
@@ -534,7 +515,7 @@
                 }
 
                 const leftHandle = document.createElement('div');
-                leftHandle.style = `
+                leftHandle.style = 
                     width: 20px;
                     height: 100%;
                     cursor: move;
@@ -545,13 +526,13 @@
                     left: 0;
                     font-size: 20px;
                     padding-left: 10px;
-                `;
-                leftHandle.innerHTML = `&#x2630;`;
+                ;
+                leftHandle.innerHTML = &#x2630;;
                 leftHandle.style.color = '#fff';
                 topBar.appendChild(leftHandle);
 
                 const rightHandle = document.createElement('div');
-                rightHandle.style = `
+                rightHandle.style = 
                     width: 20px;
                     height: 100%;
                     cursor: move;
@@ -562,8 +543,8 @@
                     right: 0;
                     font-size: 20px;
                     padding-right: 10px;
-                `;
-                rightHandle.innerHTML = `&#x2630;`;
+                ;
+                rightHandle.innerHTML = &#x2630;;
                 rightHandle.style.color = '#fff';
                 topBar.appendChild(rightHandle);
 
@@ -572,48 +553,45 @@
                 document.addEventListener('mousemove', onDragMove);
                 document.addEventListener('mouseup', onDragEnd);
 
-                // Buttons container
+                // Buttons
                 const buttonContainer = document.createElement('div');
                 buttonContainer.style = "display: flex; align-items: center; justify-content: center; margin: auto;";
                 topBar.appendChild(buttonContainer);
 
-                // IT Glue Button
                 itGlueButton = document.createElement('button');
                 itGlueButton.innerText = 'IT Glue Link';
-                itGlueButton.style = `
+                itGlueButton.style = 
                     background-color: white;
                     color: #007bff;
                     border: none;
                     margin: 0 5px;
                     padding: 5px 10px;
                     cursor: pointer;
-                `;
+                ;
                 buttonContainer.appendChild(itGlueButton);
 
-                // 365 Credentials Button
                 credentialsButton = document.createElement('button');
                 credentialsButton.innerText = '365 Credentials';
-                credentialsButton.style = `
+                credentialsButton.style = 
                     background-color: white;
                     color: #007bff;
                     border: none;
                     margin: 0 5px;
                     padding: 5px 10px;
                     cursor: pointer;
-                `;
+                ;
                 buttonContainer.appendChild(credentialsButton);
 
-                // Local Admin Button
                 localAdminButton = document.createElement('button');
                 localAdminButton.innerText = 'Local Admin';
-                localAdminButton.style = `
+                localAdminButton.style = 
                     background-color: white;
                     color: #007bff;
                     border: none;
                     margin: 0 5px;
                     padding: 5px 10px;
                     cursor: pointer;
-                `;
+                ;
                 buttonContainer.appendChild(localAdminButton);
             }
 
@@ -629,7 +607,7 @@
         const { state, postcode, country } = getStatePostcodeCountry();
         if (state || postcode || country) {
             const localTime = getHardcodedTime(state, postcode, country);
-            displayElement.innerText = `Local Time: ${localTime}`;
+            displayElement.innerText = Local Time: ${localTime};
         } else {
             displayElement.innerText = "Location not detected";
         }
