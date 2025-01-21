@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Top Bar
 // @namespace    http://tampermonkey.net/
-// @version      3.3
+// @version      3.4
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
@@ -303,11 +303,6 @@
             "localAdminId": "21260862"
         },
         "Patrick Dawson Law": {
-            "itGlueId": "8261030",
-            "credentialsId": "20575150",
-            "localAdminId": "20084383"
-        },
-        "Patrick Dawson Law": {
             "itGlueId": "5408362",
             "credentialsId": "14265704",
             "localAdminId": "21510050"
@@ -322,7 +317,21 @@
             "credentialsId": "14265641",
             "localAdminId": "28863397"
         },
-        // Add more company names and IDs here as needed
+        "Yellow Canary": {
+            "itGlueId": "6770954",
+            "credentialsId": "22557394",
+            "localAdminId": "23394798"
+            "useEvologicUrl": true
+        },
+        // Example usage for Evologic:
+        /*
+        "Example Company": {
+            "itGlueId": "1234567",
+            "credentialsId": "7654321",
+            "localAdminId": "11223344",
+            "useEvologicUrl": true
+        },
+        */
     };
 
     // Declare variables at the top scope
@@ -409,15 +418,25 @@
             previousCompanyName = companyName;
 
             const companyData = companyLinks[companyName];
-            const baseUrl = companyData?.useGreenlightUrl
-                ? 'https://greenlight-itc.itglue.com/'
-                : 'https://virtual-it-services.itglue.com/';
-            const itGlueUrl = companyData?.itGlueId ? `${baseUrl}${companyData.itGlueId}` : baseUrl;
-            const credentialsUrl = companyData?.credentialsId
-                ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.credentialsId}`
+
+            // Determine which baseUrl to use
+            let baseUrl = 'https://virtual-it-services.itglue.com/';
+            if (companyData?.useGreenlightUrl) {
+                baseUrl = 'https://greenlight-itc.itglue.com/';
+            } else if (companyData?.useEvologicUrl) {
+                baseUrl = 'https://evologic.itglue.com/';
+            }
+
+            const itGlueUrl = companyData?.itGlueId
+                ? `${baseUrl}${companyData.itGlueId}`
                 : baseUrl;
+
+            const credentialsUrl = companyData?.credentialsId
+                ? `${baseUrl}${companyData?.itGlueId}/passwords/${companyData.credentialsId}`
+                : baseUrl;
+
             const localAdminUrl = companyData?.localAdminId
-                ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.localAdminId}`
+                ? `${baseUrl}${companyData?.itGlueId}/passwords/${companyData.localAdminId}`
                 : baseUrl;
 
             // If the top bar doesn't exist, create it
@@ -553,11 +572,12 @@
                 document.addEventListener('mousemove', onDragMove);
                 document.addEventListener('mouseup', onDragEnd);
 
-                // Buttons
+                // Buttons container
                 const buttonContainer = document.createElement('div');
                 buttonContainer.style = "display: flex; align-items: center; justify-content: center; margin: auto;";
                 topBar.appendChild(buttonContainer);
 
+                // IT Glue Button
                 itGlueButton = document.createElement('button');
                 itGlueButton.innerText = 'IT Glue Link';
                 itGlueButton.style = `
@@ -570,6 +590,7 @@
                 `;
                 buttonContainer.appendChild(itGlueButton);
 
+                // 365 Credentials Button
                 credentialsButton = document.createElement('button');
                 credentialsButton.innerText = '365 Credentials';
                 credentialsButton.style = `
@@ -582,6 +603,7 @@
                 `;
                 buttonContainer.appendChild(credentialsButton);
 
+                // Local Admin Button
                 localAdminButton = document.createElement('button');
                 localAdminButton.innerText = 'Local Admin';
                 localAdminButton.style = `
