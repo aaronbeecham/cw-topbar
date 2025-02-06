@@ -322,6 +322,11 @@
             "credentialsId": "14265641",
             "localAdminId": "28863397"
         },
+        "Eagle Foods Holdings": {
+            "itGlueId": "8260852",
+            "credentialsId": "8008058",
+            "localAdminId": "28788705"
+        },
         // Add more company names and IDs here as needed
     };
 
