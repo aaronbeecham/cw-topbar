@@ -342,6 +342,11 @@
             "credentialsId": "",
             "localAdminId": ""
         },
+        "Washington Brown": {
+            "itGlueId": "8261146",
+            "credentialsId": "18249344",
+            "localAdminId": "13499611"
+        },
         // Add more company names and IDs here as needed
     };
 
