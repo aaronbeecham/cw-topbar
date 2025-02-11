@@ -327,6 +327,16 @@
             "credentialsId": "8008058",
             "localAdminId": "28788705"
         },
+        "EUROLUCE": {
+            "itGlueId": "1841893",
+            "credentialsId": "5074243",
+            "localAdminId": "5149368"
+        },
+        "Lazard Australia Pty Ltd": {
+            "itGlueId": "8260949",
+            "credentialsId": "13406412",
+            "localAdminId": "28415993"
+        },
         // Add more company names and IDs here as needed
     };
 
