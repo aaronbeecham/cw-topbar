@@ -362,6 +362,11 @@
             "credentialsId": "16830061",
             "localAdminId": "16830099"
         },
+        "Kedesh Rehabilitation Services": {
+            "itGlueId": "8260933",
+            "credentialsId": "4830494",
+            "localAdminId": "4515772"
+        },
         // Add more company names and IDs here as needed
     };
 
