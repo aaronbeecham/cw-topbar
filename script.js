@@ -367,6 +367,11 @@
             "credentialsId": "4830494",
             "localAdminId": "4515772"
         },
+        "Directions Conference & Incentive Management": {
+            "itGlueId": "4261353",
+            "credentialsId": "1283683",
+            "localAdminId": "28826564"
+        },
         // Add more company names and IDs here as needed
     };
 
