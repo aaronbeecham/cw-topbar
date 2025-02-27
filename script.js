@@ -372,6 +372,11 @@
             "credentialsId": "1283683",
             "localAdminId": "28826564"
         },
+        "Warilla Bowls and Recreation Club": {
+            "itGlueId": "8261144",
+            "credentialsId": "19059229",
+            "localAdminId": "19282859"
+        },
         // Add more company names and IDs here as needed
     };
 
