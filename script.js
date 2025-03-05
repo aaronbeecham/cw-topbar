@@ -377,6 +377,11 @@
             "credentialsId": "19059229",
             "localAdminId": "19282859"
         },
+        "St John Ambulance Australia": {
+            "itGlueId": "8261102",
+            "credentialsId": "26297422",
+            "localAdminId": "25703108"
+        },
         // Add more company names and IDs here as needed
     };
 
