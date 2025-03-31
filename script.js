@@ -382,6 +382,11 @@
             "credentialsId": "26297422",
             "localAdminId": "25703108"
         },
+        "Bannisters Hotels": {
+            "itGlueId": "8260790",
+            "credentialsId": "28603048",
+            "localAdminId": "4632827"
+        },
         // Add more company names and IDs here as needed
     };
 
