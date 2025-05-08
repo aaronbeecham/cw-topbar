@@ -392,6 +392,11 @@
             "credentialsId": "30173465",
             "localAdminId": "30065109"
         },
+        "Leeton Steel Retail": {
+            "itGlueId": "8260953",
+            "credentialsId": "11191744",
+            "localAdminId": "21786997"
+        },
         // Add more company names and IDs here as needed
     };
 
