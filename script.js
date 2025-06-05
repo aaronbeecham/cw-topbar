@@ -397,6 +397,11 @@
             "credentialsId": "11191744",
             "localAdminId": "21786997"
         },
+        "QinetiQ Air Affairs": {
+            "itGlueId": "8260767",
+            "credentialsId": "23117487",
+            "localAdminId": "26730866"
+        },
         // Add more company names and IDs here as needed
     };
 
