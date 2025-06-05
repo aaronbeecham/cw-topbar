@@ -402,6 +402,11 @@
             "credentialsId": "23117487",
             "localAdminId": "26730866"
         },
+        "RapidG": {
+            "itGlueId": "8261054",
+            "credentialsId": "14265153",
+            "localAdminId": "19985782"
+        },
         // Add more company names and IDs here as needed
     };
 
