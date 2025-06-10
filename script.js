@@ -10,9 +10,6 @@
     'use strict';
 
     const companyLinks = {
-        // Existing company entries ...
-
-        // 🧪 TEST COMPANIES FOR URL VARIANTS
         "Trenton International": {
             "itGlueId": "1842422",
             "credentialsId": "4005427",
