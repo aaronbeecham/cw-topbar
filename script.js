@@ -1,16 +1,30 @@
 // ==UserScript==
 // @name         Top Bar
 // @namespace    http://tampermonkey.net/
-// @version      3.3
+// @version      3.4
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
 
-(function() {
+(function () {
     'use strict';
 
-    // Define the company names and corresponding IDs
     const companyLinks = {
+        // Existing company entries ...
+
+        // 🧪 TEST COMPANIES FOR URL VARIANTS
+        "Trenton International": {
+            "itGlueId": "1842422",
+            "credentialsId": "4005427",
+            "localAdminId": "29075352",
+            "usePowernetUrl": true
+        },
+        "EvoCorp Solutions": {
+            "itGlueId": "5668838",
+            "credentialsId": "15601052",
+            "localAdminId": "15999999",
+            "useEvoUrl": true
+        },
         "Family Services Australia (FSA)": {
             "itGlueId": "8260864",
             "credentialsId": "8576248",
@@ -407,78 +421,12 @@
             "credentialsId": "14265153",
             "localAdminId": "19985782"
         },
-        // Add more company names and IDs here as needed
     };
 
-    // Declare variables at the top scope
     let previousCompanyName = null;
-    let topBar, timeBar;
+    let topBar;
     let itGlueButton, credentialsButton, localAdminButton;
 
-    // Function to get hardcoded local time offsets based on state, postcode, or country
-    function getHardcodedTime(state, postcode, country) {
-        const stateOffsets = {
-            "NSW": 11,   // AEDT (UTC+11)
-            "ACT": 11,   // AEDT (UTC+11)
-            "VIC": 11,   // AEDT (UTC+11)
-            "TAS": 11,   // AEDT (UTC+11)
-            "QLD": 10,   // AEST (UTC+10)
-            "SA": 10.5,  // ACDT (UTC+10.5)
-            "NT": 9.5,   // ACST (UTC+9.5)
-            "WA": 8      // AWST (UTC+8)
-        };
-
-        const postcodeOffsets = {
-            "0": 11,     // NSW/ACT
-            "1": 11,     // NSW/ACT
-            "2": 11,     // NSW/ACT
-            "3": 11,     // VIC
-            "4": 10,     // QLD
-            "5": 10.5,   // SA
-            "6": 8,      // WA
-            "7": 11,     // TAS
-            "8": 9.5,    // NT
-            "9": 10.5    // SA
-        };
-
-        const countryOffsets = {
-            "Australia": 11,   // Default to AEDT (UTC+11)
-            "Singapore": 8     // SGT (UTC+8)
-            // Add more countries as needed
-        };
-
-        let offset;
-
-        if (state && stateOffsets[state.toUpperCase()]) {
-            offset = stateOffsets[state.toUpperCase()];
-        } else if (postcode && postcode[0] && postcodeOffsets[postcode[0]]) {
-            offset = postcodeOffsets[postcode[0]];
-        } else if (country && countryOffsets[country]) {
-            offset = countryOffsets[country];
-        }
-
-        if (offset !== undefined) {
-            const now = new Date();
-            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const localTime = new Date(utc + (3600000 * offset));
-            return localTime.toTimeString().slice(0, 5);
-        }
-
-        return "Time unavailable";
-    }
-
-    // Function to get state, postcode, and country from input fields
-    function getStatePostcodeCountry() {
-        const stateElement = document.querySelector('input.cw_companyViewState');
-        const postcodeElement = document.querySelector('input.cw_companyViewZip');
-        const countryElement = document.querySelector('input.cw_companyViewCountry');
-        const state = stateElement ? stateElement.value.trim() : null;
-        const postcode = postcodeElement ? postcodeElement.value.trim() : null;
-        const country = countryElement ? countryElement.value.trim() : null;
-        return { state, postcode, country };
-    }
-
-    // Function to create or update the top bar
     function addCustomTopBar() {
         const companyNameElement = document.querySelector('input.GMDB3DUBKVH.GMDB3DUBFWH.cw_company[type="text"]');
         const companyName = companyNameElement ? companyNameElement.value.trim() : null;
@@ -489,14 +437,20 @@
             return;
         }
 
-        // Only proceed if the company name has changed
         if (companyName !== previousCompanyName) {
             previousCompanyName = companyName;
 
             const companyData = companyLinks[companyName];
-            const baseUrl = companyData?.useGreenlightUrl
-                ? 'https://greenlight-itc.itglue.com/'
-                : 'https://virtual-it-services.itglue.com/';
+            let baseUrl = 'https://virtual-it-services.itglue.com/';
+
+            if (companyData?.useGreenlightUrl) {
+                baseUrl = 'https://greenlight-itc.itglue.com/';
+            } else if (companyData?.usePowernetUrl) {
+                baseUrl = 'https://powernet.itglue.com/';
+            } else if (companyData?.useEvoUrl) {
+                baseUrl = 'https://evologic.itglue.com/';
+            }
+
             const itGlueUrl = companyData?.itGlueId ? `${baseUrl}${companyData.itGlueId}` : baseUrl;
             const credentialsUrl = companyData?.credentialsId
                 ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.credentialsId}`
@@ -505,9 +459,7 @@
                 ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.localAdminId}`
                 : baseUrl;
 
-            // If the top bar doesn't exist, create it
             if (!topBar) {
-                // Main Top Bar
                 topBar = document.createElement('div');
                 topBar.id = 'customTopBar';
                 topBar.style = `
@@ -528,44 +480,14 @@
                     transform: translateX(-50%);
                 `;
 
-                // Restore position from localStorage if available
                 const savedPosition = localStorage.getItem('customTopBarPosition');
                 if (savedPosition) {
                     topBar.style.left = `${savedPosition}px`;
-                    topBar.style.transform = `translateX(0)`; // Disable centering if position is set
+                    topBar.style.transform = `translateX(0)`;
                 }
 
                 document.body.appendChild(topBar);
 
-                // Local Time Bar
-                timeBar = document.createElement('div');
-                timeBar.id = 'localTimeBar';
-                timeBar.style = `
-                    position: fixed;
-                    top: 44px;
-                    background-color: #0056b3;
-                    color: white;
-                    height: 22px;
-                    width: auto;
-                    padding: 0 10px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    z-index: 9998;
-                    border-radius: 0 0 5px 5px;
-                    left: ${topBar.style.left};
-                    transform: translateX(0);
-                `;
-                document.body.appendChild(timeBar);
-
-                const timeDisplay = document.createElement('span');
-                timeDisplay.innerText = "Loading local time...";
-                timeBar.appendChild(timeDisplay);
-
-                // Update Time Bar
-                updateLocalTime(timeDisplay);
-
-                // Enable Dragging
                 let isDragging = false;
                 let startX = 0;
                 let initialLeft = 0;
@@ -582,20 +504,12 @@
                     const deltaX = e.clientX - startX;
                     const newLeft = initialLeft + deltaX;
                     topBar.style.left = `${newLeft}px`;
-                    topBar.style.transform = `translateX(0)`; // Disable centering when dragging
-
-                    // Update timeBar position to stay attached and centered to the top bar
-                    const topBarWidth = topBar.offsetWidth;
-                    const timeBarWidth = timeBar.offsetWidth;
-                    const timeBarLeft = newLeft + (topBarWidth / 2) - (timeBarWidth / 2);
-                    timeBar.style.left = `${timeBarLeft}px`;
-                    timeBar.style.transform = `translateX(0)`;
+                    topBar.style.transform = `translateX(0)`;
                 }
 
                 function onDragEnd() {
                     isDragging = false;
                     document.body.style.userSelect = '';
-                    // Save position to localStorage
                     localStorage.setItem('customTopBarPosition', topBar.style.left.replace('px', ''));
                 }
 
@@ -638,7 +552,6 @@
                 document.addEventListener('mousemove', onDragMove);
                 document.addEventListener('mouseup', onDragEnd);
 
-                // Buttons
                 const buttonContainer = document.createElement('div');
                 buttonContainer.style = "display: flex; align-items: center; justify-content: center; margin: auto;";
                 topBar.appendChild(buttonContainer);
@@ -680,25 +593,11 @@
                 buttonContainer.appendChild(localAdminButton);
             }
 
-            // Update button onclick handlers with the new URLs
             itGlueButton.onclick = () => window.open(itGlueUrl, '_blank');
             credentialsButton.onclick = () => window.open(credentialsUrl, '_blank');
             localAdminButton.onclick = () => window.open(localAdminUrl, '_blank');
         }
     }
 
-    // Update local time periodically
-    async function updateLocalTime(displayElement) {
-        const { state, postcode, country } = getStatePostcodeCountry();
-        if (state || postcode || country) {
-            const localTime = getHardcodedTime(state, postcode, country);
-            displayElement.innerText = `Local Time: ${localTime}`;
-        } else {
-            displayElement.innerText = "Location not detected";
-        }
-        setTimeout(() => updateLocalTime(displayElement), 60000);
-    }
-
-    // Initialize the custom top bar and check for company changes every second
     setInterval(addCustomTopBar, 1000);
 })();
