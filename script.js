@@ -16,11 +16,11 @@
             "localAdminId": "29075352",
             "usePowernetUrl": true
         },
-        "EvoCorp Solutions": {
-            "itGlueId": "5668838",
-            "credentialsId": "15601052",
-            "localAdminId": "15999999",
-            "useEvoUrl": true
+        "Quinn O'Hanlon Architects Pty Ltd": {
+            "itGlueId": "4746286",
+            "credentialsId": "13462897",
+            "localAdminId": "28751069",
+            "usePowernetUrl": true
         },
         "Family Services Australia (FSA)": {
             "itGlueId": "8260864",
