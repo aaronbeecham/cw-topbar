@@ -22,6 +22,11 @@
             "localAdminId": "29075352",
             "usePowernetUrl": true
         },
+        "Pacific Rail Engineering": {
+            "itGlueId": "8261026",
+            "credentialsId": "6437438",
+            "localAdminId": "6434752",
+        },
         "Quinn O'Hanlon Architects Pty Ltd": {
             "itGlueId": "4746286",
             "credentialsId": "13462897",
@@ -423,6 +428,11 @@
             "itGlueId": "8261054",
             "credentialsId": "14265153",
             "localAdminId": "19985782"
+        },
+        "Preston Lane": {
+            "itGlueId": "8261041",
+            "credentialsId": "22353031",
+            "localAdminId": "17069563"
         },
         // ✂️ Your full list here...
     };
