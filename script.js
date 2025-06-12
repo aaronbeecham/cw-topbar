@@ -1,13 +1,19 @@
 // ==UserScript==
-// @name         Top Bar
+// @name         Top Bar (Modern UI - Tweaked)
 // @namespace    http://tampermonkey.net/
-// @version      3.4
+// @version      3.6
 // @match        https://aus.myconnectwise.net/*
 // @grant        none
 // ==/UserScript==
 
 (function () {
     'use strict';
+
+    // Load Google Font
+    const fontLink = document.createElement("link");
+    fontLink.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap";
+    fontLink.rel = "stylesheet";
+    document.head.appendChild(fontLink);
 
     const companyLinks = {
         "Trenton International": {
@@ -418,6 +424,7 @@
             "credentialsId": "14265153",
             "localAdminId": "19985782"
         },
+        // ✂️ Your full list here...
     };
 
     let previousCompanyName = null;
@@ -439,14 +446,9 @@
 
             const companyData = companyLinks[companyName];
             let baseUrl = 'https://virtual-it-services.itglue.com/';
-
-            if (companyData?.useGreenlightUrl) {
-                baseUrl = 'https://greenlight-itc.itglue.com/';
-            } else if (companyData?.usePowernetUrl) {
-                baseUrl = 'https://powernet.itglue.com/';
-            } else if (companyData?.useEvoUrl) {
-                baseUrl = 'https://evologic.itglue.com/';
-            }
+            if (companyData?.useGreenlightUrl) baseUrl = 'https://greenlight-itc.itglue.com/';
+            else if (companyData?.usePowernetUrl) baseUrl = 'https://powernet.itglue.com/';
+            else if (companyData?.useEvoUrl) baseUrl = 'https://evologic.itglue.com/';
 
             const itGlueUrl = companyData?.itGlueId ? `${baseUrl}${companyData.itGlueId}` : baseUrl;
             const credentialsUrl = companyData?.credentialsId
@@ -462,19 +464,21 @@
                 topBar.style = `
                     position: fixed;
                     top: 0;
-                    background-color: #007bff;
-                    color: white;
-                    height: 44px;
-                    width: auto;
-                    display: flex;
-                    align-items: center;
-                    z-index: 9999;
-                    padding: 0 36px;
-                    border-radius: 0 0 5px 5px;
-                    cursor: move;
-                    user-select: none;
                     left: 50%;
                     transform: translateX(-50%);
+                    background: rgba(0, 123, 255, 0.75);
+                    backdrop-filter: blur(10px);
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                    color: white;
+                    height: 60px;
+                    border-radius: 0 0 12px 12px;
+                    display: flex;
+                    align-items: center;
+                    padding: 0 30px;
+                    z-index: 9999;
+                    font-family: 'Inter', sans-serif;
+                    font-size: 14px;
+                    user-select: none;
                 `;
 
                 const savedPosition = localStorage.getItem('customTopBarPosition');
@@ -483,8 +487,66 @@
                     topBar.style.transform = `translateX(0)`;
                 }
 
-                document.body.appendChild(topBar);
+                // ☰ Drag handle
+                const dragHandle = document.createElement('div');
+                dragHandle.innerHTML = `☰`;
+                dragHandle.style = `
+                    font-size: 20px;
+                    cursor: grab;
+                    color: white;
+                    margin-right: 20px;
+                `;
+                topBar.appendChild(dragHandle);
 
+                // 🔘 Button container
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style = `
+                    display: flex;
+                    gap: 12px;
+                    flex: 1;
+                    justify-content: center;
+                    align-items: center;
+                `;
+                topBar.appendChild(buttonContainer);
+
+                // 🧬 Button factory (with matched rounding)
+                function createModernButton(label, color = "#007bff") {
+                    const btn = document.createElement('button');
+                    btn.innerText = label;
+                    btn.style = `
+                        background: white;
+                        color: ${color};
+                        border: none;
+                        border-radius: 12px;
+                        padding: 8px 16px;
+                        font-size: 13px;
+                        font-weight: 600;
+                        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+                        transition: all 0.3s ease-in-out;
+                        cursor: pointer;
+                    `;
+                    btn.onmouseover = () => {
+                        btn.style.background = color;
+                        btn.style.color = "white";
+                    };
+                    btn.onmouseout = () => {
+                        btn.style.background = "white";
+                        btn.style.color = color;
+                    };
+                    return btn;
+                }
+
+                // 🎯 Create buttons
+                itGlueButton = createModernButton("IT Glue Link");
+                credentialsButton = createModernButton("365 Credentials");
+                localAdminButton = createModernButton("Local Admin");
+
+                // ➕ Append buttons
+                buttonContainer.appendChild(itGlueButton);
+                buttonContainer.appendChild(credentialsButton);
+                buttonContainer.appendChild(localAdminButton);
+
+                // 🧲 Drag Logic
                 let isDragging = false;
                 let startX = 0;
                 let initialLeft = 0;
@@ -510,84 +572,12 @@
                     localStorage.setItem('customTopBarPosition', topBar.style.left.replace('px', ''));
                 }
 
-                const leftHandle = document.createElement('div');
-                leftHandle.style = `
-                    width: 20px;
-                    height: 100%;
-                    cursor: move;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    position: absolute;
-                    left: 0;
-                    font-size: 20px;
-                    padding-left: 10px;
-                `;
-                leftHandle.innerHTML = `&#x2630;`;
-                leftHandle.style.color = '#fff';
-                topBar.appendChild(leftHandle);
-
-                const rightHandle = document.createElement('div');
-                rightHandle.style = `
-                    width: 20px;
-                    height: 100%;
-                    cursor: move;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    position: absolute;
-                    right: 0;
-                    font-size: 20px;
-                    padding-right: 10px;
-                `;
-                rightHandle.innerHTML = `&#x2630;`;
-                rightHandle.style.color = '#fff';
-                topBar.appendChild(rightHandle);
-
-                leftHandle.addEventListener('mousedown', onDragStart);
-                rightHandle.addEventListener('mousedown', onDragStart);
+                dragHandle.addEventListener('mousedown', onDragStart);
                 document.addEventListener('mousemove', onDragMove);
                 document.addEventListener('mouseup', onDragEnd);
 
-                const buttonContainer = document.createElement('div');
-                buttonContainer.style = "display: flex; align-items: center; justify-content: center; margin: auto;";
-                topBar.appendChild(buttonContainer);
-
-                itGlueButton = document.createElement('button');
-                itGlueButton.innerText = 'IT Glue Link';
-                itGlueButton.style = `
-                    background-color: white;
-                    color: #007bff;
-                    border: none;
-                    margin: 0 5px;
-                    padding: 5px 10px;
-                    cursor: pointer;
-                `;
-                buttonContainer.appendChild(itGlueButton);
-
-                credentialsButton = document.createElement('button');
-                credentialsButton.innerText = '365 Credentials';
-                credentialsButton.style = `
-                    background-color: white;
-                    color: #007bff;
-                    border: none;
-                    margin: 0 5px;
-                    padding: 5px 10px;
-                    cursor: pointer;
-                `;
-                buttonContainer.appendChild(credentialsButton);
-
-                localAdminButton = document.createElement('button');
-                localAdminButton.innerText = 'Local Admin';
-                localAdminButton.style = `
-                    background-color: white;
-                    color: #007bff;
-                    border: none;
-                    margin: 0 5px;
-                    padding: 5px 10px;
-                    cursor: pointer;
-                `;
-                buttonContainer.appendChild(localAdminButton);
+                // 🧩 Final attach
+                document.body.appendChild(topBar);
             }
 
             itGlueButton.onclick = () => window.open(itGlueUrl, '_blank');
