@@ -434,6 +434,12 @@
             "credentialsId": "22353031",
             "localAdminId": "17069563"
         },
+        "Wise Group Solutions Pty Ltd": {
+            "itGlueId": "5489911",
+            "credentialsId": "14547831",
+            "localAdminId": "22220552"
+            "usePowernetUrl": true
+        },
         // ✂️ Your full list here...
     };
 
