@@ -440,6 +440,12 @@
             "localAdminId": "22220552"
             "usePowernetUrl": true
         },
+        "TAGGLE SYSTEMS": {
+            "itGlueId": "5213129",
+            "credentialsId": "13113370",
+            "localAdminId": "15987017"
+            "usePowernetUrl": true
+        },
         // ✂️ Your full list here...
     };
 
