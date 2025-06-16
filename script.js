@@ -351,8 +351,9 @@
         },
         "EUROLUCE": {
             "itGlueId": "1841893",
-            "credentialsId": "5074243",
+            "credentialsId": "31801881",
             "localAdminId": "5149368"
+            "usePowernetUrl": true
         },
         "Lazard Australia Pty Ltd": {
             "itGlueId": "8260949",
