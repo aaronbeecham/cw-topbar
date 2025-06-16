@@ -446,6 +446,11 @@
             "localAdminId": "15987017"
             "usePowernetUrl": true
         },
+        "Pacific Rail Engineering": {
+            "itGlueId": "8261026",
+            "credentialsId": "6437438",
+            "localAdminId": "6434752"
+        },
         // ✂️ Your full list here...
     };
 
