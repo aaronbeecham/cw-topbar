@@ -453,6 +453,12 @@
             "credentialsId": "6437438",
             "localAdminId": "6434752"
         },
+        "NKT Pty Ltd": {
+            "itGlueId": "1841971",
+            "credentialsId": "",
+            "localAdminId": "17608620"
+            "usePowernetUrl": true
+        },
         // ✂️ Your full list here...
     };
 
