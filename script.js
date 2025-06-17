@@ -361,9 +361,10 @@
             "localAdminId": "28415993"
         },
         "ORIGINAL MATTRESS FACTORY PTY LTD (OMF)": {
-            "itGlueId": "8230804",
-            "credentialsId": "",
-            "localAdminId": ""
+            "itGlueId": "4737892",
+            "credentialsId": "11278437",
+            "localAdminId": "11499284"
+            "usePowernetUrl": true
         },
         "Washington Brown": {
             "itGlueId": "8261146",
