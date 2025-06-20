@@ -465,6 +465,11 @@
             "localAdminId": "22220552"
             "usePowernetUrl": true
         },
+        "Sydney Prop Specialists (SPS)": {
+            "itGlueId": "8261112",
+            "credentialsId": "1569096",
+            "localAdminId": "28631505"
+        },
         // ✂️ Your full list here...
     };
 
