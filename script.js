@@ -470,6 +470,12 @@
             "credentialsId": "1569096",
             "localAdminId": "28631505"
         },
+        "Yellow Canary": {
+            "itGlueId": "6770954",
+            "credentialsId": "22557394",
+            "localAdminId": "23394798"
+            "useEvoUrl": true
+        },
         // ✂️ Your full list here...
     };
 
