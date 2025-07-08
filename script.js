@@ -352,7 +352,7 @@
         "EUROLUCE": {
             "itGlueId": "1841893",
             "credentialsId": "31801881",
-            "localAdminId": "5149368"
+            "localAdminId": "5149368",
             "usePowernetUrl": true
         },
         "Lazard Australia Pty Ltd": {
@@ -363,7 +363,7 @@
         "ORIGINAL MATTRESS FACTORY PTY LTD (OMF)": {
             "itGlueId": "4737892",
             "credentialsId": "11278437",
-            "localAdminId": "11499284"
+            "localAdminId": "11499284",
             "usePowernetUrl": true
         },
         "Washington Brown": {
@@ -439,13 +439,13 @@
         "Wise Group Solutions Pty Ltd": {
             "itGlueId": "5489911",
             "credentialsId": "14547831",
-            "localAdminId": "22220552"
+            "localAdminId": "22220552",
             "usePowernetUrl": true
         },
         "TAGGLE SYSTEMS": {
             "itGlueId": "5213129",
             "credentialsId": "13113370",
-            "localAdminId": "15987017"
+            "localAdminId": "15987017",
             "usePowernetUrl": true
         },
         "Pacific Rail Engineering": {
@@ -456,13 +456,13 @@
         "NKT Pty Ltd": {
             "itGlueId": "1841971",
             "credentialsId": "",
-            "localAdminId": "17608620"
+            "localAdminId": "17608620",
             "usePowernetUrl": true
         },
         "Wise Group Solutions Pty Ltd": {
             "itGlueId": "5489911",
             "credentialsId": "14547831",
-            "localAdminId": "22220552"
+            "localAdminId": "22220552",
             "usePowernetUrl": true
         },
         "Sydney Prop Specialists (SPS)": {
@@ -473,8 +473,14 @@
         "Yellow Canary": {
             "itGlueId": "6770954",
             "credentialsId": "22557394",
-            "localAdminId": "23394798"
+            "localAdminId": "23394798",
             "useEvoUrl": true
+        },
+        "ALLURA PARTNERS PTY LTD": {
+            "itGlueId": "6068165",
+            "credentialsId": "17033381",
+            "localAdminId": "30983250",
+            "usePowernetUrl": true
         },
         // ✂️ Your full list here...
     };
