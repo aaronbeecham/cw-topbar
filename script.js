@@ -37,7 +37,7 @@
             "itGlueId": "8260864",
             "credentialsId": "8576248",
             "localAdminId": "24481000",
-            "msaasId": "/assets/293022-msaas-summary",
+            "msaasId": "293022-msaas-summary",
             "soeId": "52627-applications"
         },
         "Peoplecare": {
