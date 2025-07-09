@@ -518,10 +518,10 @@
                 ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.localAdminId}`
                 : baseUrl;
             const msaasUrl = companyData?.msaasId
-                ? `${baseUrl}${companyData.msaasId}`
+                ? `${baseUrl}${companyData.itGlueId}/assets/${companyData.msaasId}`
                 : baseUrl;
             const soeUrl = companyData?.soeId
-                ? `${baseUrl}${companyData.soeId}`
+                ? `${baseUrl}${companyData.itGlueId}/assets/${companyData.soeId}`
                 : baseUrl;
 
             if (!topBar) {
