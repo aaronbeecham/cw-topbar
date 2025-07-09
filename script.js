@@ -36,7 +36,9 @@
         "Family Services Australia (FSA)": {
             "itGlueId": "8260864",
             "credentialsId": "8576248",
-            "localAdminId": "24481000"
+            "localAdminId": "24481000",
+            "msaasId": "/assets/293022-msaas-summary",
+            "soeId": "52627-applications"
         },
         "Peoplecare": {
             "itGlueId": "5429844",
@@ -487,7 +489,7 @@
 
     let previousCompanyName = null;
     let topBar;
-    let itGlueButton, credentialsButton, localAdminButton;
+    let itGlueButton, credentialsButton, localAdminButton, msaasButton, soeButton;
 
     function addCustomTopBar() {
         const companyNameElement = document.querySelector('input.GMDB3DUBKVH.GMDB3DUBFWH.cw_company[type="text"]');
@@ -514,6 +516,12 @@
                 : baseUrl;
             const localAdminUrl = companyData?.localAdminId
                 ? `${baseUrl}${companyData.itGlueId}/passwords/${companyData.localAdminId}`
+                : baseUrl;
+            const msaasUrl = companyData?.msaasId
+                ? `${baseUrl}${companyData.msaasId}`
+                : baseUrl;
+            const soeUrl = companyData?.soeId
+                ? `${baseUrl}${companyData.soeId}`
                 : baseUrl;
 
             if (!topBar) {
@@ -595,14 +603,18 @@
                 }
 
                 // 🎯 Create buttons
-                itGlueButton = createModernButton("IT Glue Link");
-                credentialsButton = createModernButton("365 Credentials");
+                itGlueButton = createModernButton("IT Glue");
+                credentialsButton = createModernButton("365");
                 localAdminButton = createModernButton("Local Admin");
+                msaasButton = createModernButton("MSAAS");
+                soeButton = createModernButton("SOE");
 
                 // ➕ Append buttons
                 buttonContainer.appendChild(itGlueButton);
                 buttonContainer.appendChild(credentialsButton);
                 buttonContainer.appendChild(localAdminButton);
+                buttonContainer.appendChild(msaasButton);
+                buttonContainer.appendChild(soeButton);
 
                 // 🧲 Drag Logic
                 let isDragging = false;
@@ -641,6 +653,8 @@
             itGlueButton.onclick = () => window.open(itGlueUrl, '_blank');
             credentialsButton.onclick = () => window.open(credentialsUrl, '_blank');
             localAdminButton.onclick = () => window.open(localAdminUrl, '_blank');
+            msaasButton.onclick = () => window.open(msaasUrl, '_blank');
+            soeButton.onclick = () => window.open(soeUrl, '_blank');
         }
     }
 
