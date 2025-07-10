@@ -37,7 +37,7 @@
             "itGlueId": "8260864",
             "credentialsId": "8576248",
             "localAdminId": "24481000",
-            "msaasId": "293022-msaas-summary",
+            "msaasId": "/assets/293022-msaas-summary",
             "soeId": "52627-applications"
         },
         "Peoplecare": {
@@ -529,18 +529,19 @@
                 topBar.id = 'customTopBar';
                 topBar.style = `
                     position: fixed;
-                    top: 0;
-                    left: 50%;
-                    transform: translateX(-50%);
+                    top: 50%;
+                    left: 0;
+                    transform: translateY(-50%);
                     background: rgba(0, 123, 255, 0.75);
                     backdrop-filter: blur(10px);
                     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
                     color: white;
-                    height: 60px;
-                    border-radius: 0 0 12px 12px;
+                    width: 193;
+                    border-radius: 0 12px 12px 0;
                     display: flex;
+                    flex-direction: column;
                     align-items: center;
-                    padding: 0 30px;
+                    padding: 15px 15px;
                     z-index: 9999;
                     font-family: 'Inter', sans-serif;
                     font-size: 14px;
@@ -549,8 +550,8 @@
 
                 const savedPosition = localStorage.getItem('customTopBarPosition');
                 if (savedPosition) {
-                    topBar.style.left = `${savedPosition}px`;
-                    topBar.style.transform = `translateX(0)`;
+                    topBar.style.top = `${savedPosition}px`;
+                    topBar.style.transform = `translateY(0)`;
                 }
 
                 // ☰ Drag handle
@@ -560,7 +561,7 @@
                     font-size: 20px;
                     cursor: grab;
                     color: white;
-                    margin-right: 20px;
+                    margin-bottom: 20px;
                 `;
                 topBar.appendChild(dragHandle);
 
@@ -568,9 +569,9 @@
                 const buttonContainer = document.createElement('div');
                 buttonContainer.style = `
                     display: flex;
+                    flex-direction: column;
                     gap: 12px;
-                    flex: 1;
-                    justify-content: center;
+                    width: 100%;
                     align-items: center;
                 `;
                 topBar.appendChild(buttonContainer);
@@ -585,6 +586,8 @@
                         border: none;
                         border-radius: 12px;
                         padding: 8px 16px;
+                        width: 160px;
+                        text-align: center;
                         font-size: 13px;
                         font-weight: 600;
                         box-shadow: 0 2px 6px rgba(0,0,0,0.15);
@@ -604,7 +607,7 @@
 
                 // 🎯 Create buttons
                 itGlueButton = createModernButton("IT Glue");
-                credentialsButton = createModernButton("365");
+                credentialsButton = createModernButton("365 Credentials");
                 localAdminButton = createModernButton("Local Admin");
                 msaasButton = createModernButton("MSAAS");
                 soeButton = createModernButton("SOE");
@@ -618,28 +621,30 @@
 
                 // 🧲 Drag Logic
                 let isDragging = false;
-                let startX = 0;
-                let initialLeft = 0;
+                let startY = 0;
+                let initialTop = 0;
 
                 function onDragStart(e) {
                     isDragging = true;
-                    startX = e.clientX;
-                    initialLeft = parseInt(topBar.style.left.replace('px', ''));
+                    startY = e.clientY;
+                    initialTop = parseInt(topBar.style.top.replace('px', ''));
+                    document.addEventListener('mousemove', onDragMove);
+                    document.addEventListener('mouseup', onDragEnd);
                     document.body.style.userSelect = 'none';
                 }
 
                 function onDragMove(e) {
                     if (!isDragging) return;
-                    const deltaX = e.clientX - startX;
-                    const newLeft = initialLeft + deltaX;
-                    topBar.style.left = `${newLeft}px`;
-                    topBar.style.transform = `translateX(0)`;
+                    const deltaY = e.clientY - startY;
+                    const newTop = initialTop + deltaY;
+                    topBar.style.top = `${newTop}px`;
+                    topBar.style.transform = `translateY(0)`;
                 }
 
                 function onDragEnd() {
                     isDragging = false;
                     document.body.style.userSelect = '';
-                    localStorage.setItem('customTopBarPosition', topBar.style.left.replace('px', ''));
+                    localStorage.setItem('customTopBarPosition', topBar.style.top.replace('px', ''));
                 }
 
                 dragHandle.addEventListener('mousedown', onDragStart);
