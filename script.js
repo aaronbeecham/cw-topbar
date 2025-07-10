@@ -554,17 +554,6 @@
                     topBar.style.transform = `translateY(0)`;
                 }
 
-                // ☰ Drag handle
-                const dragHandle = document.createElement('div');
-                dragHandle.innerHTML = `☰`;
-                dragHandle.style = `
-                    font-size: 20px;
-                    cursor: grab;
-                    color: white;
-                    margin-bottom: 20px;
-                `;
-                topBar.appendChild(dragHandle);
-
                 // 🔘 Button container
                 const buttonContainer = document.createElement('div');
                 buttonContainer.style = `
@@ -647,7 +636,7 @@
                     localStorage.setItem('customTopBarPosition', topBar.style.top.replace('px', ''));
                 }
 
-                dragHandle.addEventListener('mousedown', onDragStart);
+                topBar.addEventListener('mousedown', onDragStart);
                 document.addEventListener('mousemove', onDragMove);
                 document.addEventListener('mouseup', onDragEnd);
 
