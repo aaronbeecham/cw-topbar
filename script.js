@@ -20,150 +20,206 @@
             "itGlueId": "1842422",
             "credentialsId": "4005427",
             "localAdminId": "29075352",
+            "msaasId": "",
+            "soeId": "",
             "usePowernetUrl": true
         },
         "Pacific Rail Engineering": {
             "itGlueId": "8261026",
             "credentialsId": "6437438",
             "localAdminId": "6434752",
+            "msaasId": "",
+            "soeId": ""
         },
         "Quinn O'Hanlon Architects Pty Ltd": {
             "itGlueId": "4746286",
             "credentialsId": "13462897",
             "localAdminId": "28751069",
+            "msaasId": "",
+            "soeId": "",
             "usePowernetUrl": true
         },
         "Family Services Australia (FSA)": {
             "itGlueId": "8260864",
             "credentialsId": "8576248",
             "localAdminId": "24481000",
-            "msaasId": "/assets/293022-msaas-summary",
+            "msaasId": "293022-msaas-summary",
             "soeId": "52627-applications"
         },
         "Peoplecare": {
             "itGlueId": "5429844",
             "credentialsId": "15552914",
-            "localAdminId": "25303391"
+            "localAdminId": "25303391",
+            "msaasId": "",
+            "soeId": ""
         },
         "State Sport Centres Trust (SSCT)": {
             "itGlueId": "8261103",
             "credentialsId": "10494182",
-            "localAdminId": "10972458"
+            "localAdminId": "10972458",
+            "msaasId": "",
+            "soeId": ""
         },
         "Lubrication Engineers": {
             "itGlueId": "8260966",
             "credentialsId": "2812021",
-            "localAdminId": "4515777"
+            "localAdminId": "4515777",
+            "msaasId": "",
+            "soeId": ""
         },
         "Heard McEwan Pty Limited": {
             "itGlueId": "8260899",
             "credentialsId": "6090767",
-            "localAdminId": "6078049"
+            "localAdminId": "6078049",
+            "msaasId": "",
+            "soeId": ""
         },
         "ECTARC": {
             "itGlueId": "8260856",
             "credentialsId": "26041223",
-            "localAdminId": "25847056"
+            "localAdminId": "25847056",
+            "msaasId": "",
+            "soeId": ""
         },
         "Aquilius Investment Partners Pte. Ltd.": {
             "itGlueId": "8260774",
             "credentialsId": "17559312",
-            "localAdminId": "17559429"
+            "localAdminId": "17559429",
+            "msaasId": "293022-msaas-summary",
+            "soeId": "52627-applications"
         },
         "Polyflor": {
             "itGlueId": "8261037",
             "credentialsId": "10096962",
-            "localAdminId": "15045798"
+            "localAdminId": "15045798",
+            "msaasId": "",
+            "soeId": ""
         },
         "Chamberlains": {
             "itGlueId": "8260821",
             "credentialsId": "23003598",
-            "localAdminId": "4515702"
+            "localAdminId": "4515702",
+            "msaasId": "",
+            "soeId": ""
         },
         "Axis Plumbing": {
             "itGlueId": "4585191",
             "credentialsId": "13763560",
-            "localAdminId": "17144505"
+            "localAdminId": "17144505",
+            "msaasId": "",
+            "soeId": ""
         },
         "AWN Food & Fibre Holdings Pty Ltd": {
             "itGlueId": "8260787",
             "credentialsId": "18694396",
-            "localAdminId": "20819327"
+            "localAdminId": "20819327",
+            "msaasId": "",
+            "soeId": ""
         },
         "Chartertech Pty Ltd": {
             "itGlueId": "8260823",
             "credentialsId": "14265908",
-            "localAdminId": "20114900"
+            "localAdminId": "20114900",
+            "msaasId": "",
+            "soeId": ""
         },
         "Evolve Housing": {
             "itGlueId": "4842737",
             "credentialsId": "22010818",
-            "localAdminId": "10734174"
+            "localAdminId": "10734174",
+            "msaasId": "",
+            "soeId": ""
         },
         "Girl Guides NSW, ACT & NT": {
             "itGlueId": "8260882",
             "credentialsId": "20606178",
-            "localAdminId": "20819381"
+            "localAdminId": "20819381",
+            "msaasId": "",
+            "soeId": ""
         },
         "Endotherapeutics Pty Ltd": {
             "itGlueId": "8260859",
             "credentialsId": "23434860",
-            "localAdminId": "22099378"
+            "localAdminId": "22099378",
+            "msaasId": "",
+            "soeId": ""
         },
         "Advanced Constructions": {
             "itGlueId": "8260765",
             "credentialsId": "18342882",
-            "localAdminId": "17144505"
+            "localAdminId": "17144505",
+            "msaasId": "",
+            "soeId": ""
         },
         "Centurion Healthcare": {
             "itGlueId": "8260819",
             "credentialsId": "19132422",
-            "localAdminId": "24621473"
+            "localAdminId": "24621473",
+            "msaasId": "",
+            "soeId": ""
         },
         "Curijo Pty Ltd": {
             "itGlueId": "8260839",
             "credentialsId": "14277889",
-            "localAdminId": "15820693"
+            "localAdminId": "15820693",
+            "msaasId": "",
+            "soeId": ""
         },
         "My Gateway": {
             "itGlueId": "8261000",
             "credentialsId": "2291285",
-            "localAdminId": "4515786"
+            "localAdminId": "4515786",
+            "msaasId": "",
+            "soeId": ""
         },
         "Domaine Wine Shippers (DWS)": {
             "itGlueId": "8260846",
             "credentialsId": "27996400",
-            "localAdminId": "19777052"
+            "localAdminId": "19777052",
+            "msaasId": "",
+            "soeId": ""
         },
         "align.me": {
             "itGlueId": "4314127",
             "credentialsId": "17451897",
-            "localAdminId": "9732988"
+            "localAdminId": "9732988",
+            "msaasId": "",
+            "soeId": ""
         },
         "CleanSpace Technology Pty Ltd": {
             "itGlueId": "8260753",
             "credentialsId": "16717196",
-            "localAdminId": "7488319"
+            "localAdminId": "7488319",
+            "msaasId": "",
+            "soeId": ""
         },
         "Care Pharmaceuticals": {
             "itGlueId": "8260810",
             "credentialsId": "16884291",
-            "localAdminId": "6375172"
+            "localAdminId": "6375172",
+            "msaasId": "",
+            "soeId": ""
         },
         "Nugan Estate Wines": {
             "itGlueId": "3614543",
             "credentialsId": "7001345",
-            "localAdminId": "19082437"
+            "localAdminId": "19082437",
+            "msaasId": "",
+            "soeId": ""
         },
         "Mini Tankers Australia Pty Ltd (RFS)": {
             "itGlueId": "8260990",
             "credentialsId": "23630488",
-            "localAdminId": "24408470"
+            "localAdminId": "24408470",
+            "msaasId": "",
+            "soeId": ""
         },
         "Australian Indigenous Education Foundation (AIEF)": {
             "itGlueId": "8260782",
             "credentialsId": "16716437",
-            "localAdminId": "24325209"
+            "localAdminId": "24325209",
+            "msaasId": "",
+            "soeId": ""
         },
         "RSL National": {
             "itGlueId": "8261081",
@@ -303,8 +359,10 @@
         },
         "Swift Metal Australia": {
             "itGlueId": "8261111",
-            "credentialsId": "25209230",
-            "localAdminId": "16867316"
+            "credentialsId": "18031037",
+            "localAdminId": "16867316",
+            "msaasId": "293022-msaas-summary",
+            "soeId": "52627-applications"
         },
         "Cox Sherlock Accountants": {
             "itGlueId": "5408382",
