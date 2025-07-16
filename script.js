@@ -542,7 +542,14 @@
             "localAdminId": "30983250",
             "usePowernetUrl": true
         },
-        // ✂️ Your full list here...
+        "Remedial Building Services Australia": {
+            "itGlueId": "6537798",
+            "credentialsId": "19777537",
+            "localAdminId": "19787784",
+            "msaasId": "339335-msaas-summary",
+            "soeId": "3098-applications"
+            "usePowernetUrl": true
+        },        
     };
 
     let previousCompanyName = null;
