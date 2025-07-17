@@ -235,6 +235,8 @@
             "itGlueId": "3010977",
             "credentialsId": "5617401",
             "localAdminId": "5617396",
+            "msaasId": "339336-msaas-summary",
+            "soeId": "99848-applications",
             "useGreenlightUrl": true
         },
         "Infrastructure Sustainability Council (ISCA)": {
@@ -250,7 +252,9 @@
         "Australian Amalgamated Terminals (AAT)": {
             "itGlueId": "8261173",
             "credentialsId": "21242437",
-            "localAdminId": "21242437"
+            "localAdminId": "21242437",
+            "msaasId": "293022-msaas-summary",
+            "soeId": "52627-applications"
         },
         "Valiant Commercial Furniture": {
             "itGlueId": "8261136",
@@ -547,7 +551,7 @@
             "credentialsId": "19777537",
             "localAdminId": "19787784",
             "msaasId": "339335-msaas-summary",
-            "soeId": "3098-applications"
+            "soeId": "3098-applications",
             "usePowernetUrl": true
         },        
     };
