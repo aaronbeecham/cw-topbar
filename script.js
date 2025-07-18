@@ -532,7 +532,9 @@
         "Sydney Prop Specialists (SPS)": {
             "itGlueId": "8261112",
             "credentialsId": "1569096",
-            "localAdminId": "28631505"
+            "localAdminId": "28631505",
+            "msaasId": "293022-msaas-summary",
+            "soeId": "52627-applications"
         },
         "Yellow Canary": {
             "itGlueId": "6770954",
