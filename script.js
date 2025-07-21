@@ -500,12 +500,6 @@
             "credentialsId": "22353031",
             "localAdminId": "17069563"
         },
-        "Wise Group Solutions Pty Ltd": {
-            "itGlueId": "5489911",
-            "credentialsId": "14547831",
-            "localAdminId": "22220552",
-            "usePowernetUrl": true
-        },
         "TAGGLE SYSTEMS": {
             "itGlueId": "5213129",
             "credentialsId": "13113370",
@@ -555,7 +549,15 @@
             "msaasId": "339335-msaas-summary",
             "soeId": "3098-applications",
             "usePowernetUrl": true
-        },        
+        },
+        "Commercial Kitchen Company": {
+            "itGlueId": "1841952",
+            "credentialsId": "28016510",
+            "localAdminId": "32143883",
+            "msaasId": "339335-msaas-summary",
+            "soeId": "3098-applications",
+            "usePowernetUrl": true
+        },
     };
 
     let previousCompanyName = null;
