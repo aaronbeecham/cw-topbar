@@ -22,6 +22,7 @@
             "localAdminId": "29075352",
             "msaasId": "",
             "soeId": "",
+            "dattoId": "52511/trenton-international",
             "usePowernetUrl": true
         },
         "Pacific Rail Engineering": {
@@ -37,6 +38,7 @@
             "localAdminId": "28751069",
             "msaasId": "",
             "soeId": "",
+            "dattoId": "70062/quinn-o'hanlon-architects-pty-ltd",
             "usePowernetUrl": true
         },
         "Family Services Australia (FSA)": {
@@ -417,6 +419,7 @@
             "itGlueId": "1841893",
             "credentialsId": "31801881",
             "localAdminId": "5149368",
+            "dattoId": "52380/euroluce-lighting-australia",
             "usePowernetUrl": true
         },
         "Lazard Australia Pty Ltd": {
@@ -428,6 +431,7 @@
             "itGlueId": "4737892",
             "credentialsId": "11278437",
             "localAdminId": "11499284",
+            "dattoId": "71000/original-mattress-factory-(omf)",
             "usePowernetUrl": true
         },
         "Washington Brown": {
@@ -515,6 +519,7 @@
             "itGlueId": "1841971",
             "credentialsId": "",
             "localAdminId": "17608620",
+            "dattoId": "52448/nkt",
             "usePowernetUrl": true
         },
         "Wise Group Solutions Pty Ltd": {
@@ -539,6 +544,7 @@
             "itGlueId": "6068165",
             "credentialsId": "17033381",
             "localAdminId": "30983250",
+            "dattoId": "96544/allura-partners-pty-ltd",
             "usePowernetUrl": true
         },
         "Remedial Building Services Australia": {
@@ -547,6 +553,7 @@
             "localAdminId": "19787784",
             "msaasId": "339335-msaas-summary",
             "soeId": "3098-applications",
+            "dattoId": "104165/remedial-building-services-australia",
             "usePowernetUrl": true
         },
     };
