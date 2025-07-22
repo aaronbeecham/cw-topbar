@@ -521,14 +521,13 @@
             "itGlueId": "5489911",
             "credentialsId": "14547831",
             "localAdminId": "22220552",
+            "dattoId": "85923/wise-group-solutions-pty-ltd",
             "usePowernetUrl": true
         },
         "Sydney Prop Specialists (SPS)": {
             "itGlueId": "8261112",
             "credentialsId": "1569096",
-            "localAdminId": "28631505",
-            "msaasId": "293022-msaas-summary",
-            "soeId": "52627-applications"
+            "localAdminId": "28631505"
         },
         "Yellow Canary": {
             "itGlueId": "6770954",
@@ -550,19 +549,11 @@
             "soeId": "3098-applications",
             "usePowernetUrl": true
         },
-        "Commercial Kitchen Company": {
-            "itGlueId": "1841952",
-            "credentialsId": "28016510",
-            "localAdminId": "32143883",
-            "msaasId": "339335-msaas-summary",
-            "soeId": "3098-applications",
-            "usePowernetUrl": true
-        },
     };
 
     let previousCompanyName = null;
     let topBar;
-    let itGlueButton, credentialsButton, localAdminButton, msaasButton, soeButton;
+    let itGlueButton, credentialsButton, localAdminButton, msaasButton, soeButton, dattoButton;
 
     function addCustomTopBar() {
         const companyNameElement = document.querySelector('input.GMDB3DUBKVH.GMDB3DUBFWH.cw_company[type="text"]');
@@ -578,6 +569,8 @@
             previousCompanyName = companyName;
 
             const companyData = companyLinks[companyName];
+            const dattoBase = "https://syrah.rmm.datto.com/site/";
+            const dattoUrl = companyData?.dattoId ? `${dattoBase}${companyData.dattoId}` : dattoBase;
             let baseUrl = 'https://virtual-it-services.itglue.com/';
             if (companyData?.useGreenlightUrl) baseUrl = 'https://greenlight-itc.itglue.com/';
             else if (companyData?.usePowernetUrl) baseUrl = 'https://powernet.itglue.com/';
@@ -627,7 +620,6 @@
                     topBar.style.transform = `translateY(0)`;
                 }
 
-                // 🔘 Button container
                 const buttonContainer = document.createElement('div');
                 buttonContainer.style = `
                     display: flex;
@@ -638,7 +630,6 @@
                 `;
                 topBar.appendChild(buttonContainer);
 
-                // 🧬 Button factory (with matched rounding)
                 function createModernButton(label, color = "#007bff") {
                     const btn = document.createElement('button');
                     btn.innerText = label;
@@ -667,21 +658,20 @@
                     return btn;
                 }
 
-                // 🎯 Create buttons
                 itGlueButton = createModernButton("IT Glue");
                 credentialsButton = createModernButton("365 Credentials");
                 localAdminButton = createModernButton("Local Admin");
                 msaasButton = createModernButton("MSAAS");
                 soeButton = createModernButton("SOE");
+                dattoButton = createModernButton("Datto RMM", "#2e86de");
 
-                // ➕ Append buttons
                 buttonContainer.appendChild(itGlueButton);
                 buttonContainer.appendChild(credentialsButton);
                 buttonContainer.appendChild(localAdminButton);
                 buttonContainer.appendChild(msaasButton);
                 buttonContainer.appendChild(soeButton);
+                buttonContainer.appendChild(dattoButton);
 
-                // 🧲 Drag Logic
                 let isDragging = false;
                 let startY = 0;
                 let initialTop = 0;
@@ -713,7 +703,6 @@
                 document.addEventListener('mousemove', onDragMove);
                 document.addEventListener('mouseup', onDragEnd);
 
-                // 🧩 Final attach
                 document.body.appendChild(topBar);
             }
 
@@ -722,6 +711,7 @@
             localAdminButton.onclick = () => window.open(localAdminUrl, '_blank');
             msaasButton.onclick = () => window.open(msaasUrl, '_blank');
             soeButton.onclick = () => window.open(soeUrl, '_blank');
+            dattoButton.onclick = () => window.open(dattoUrl, '_blank');
         }
     }
 
