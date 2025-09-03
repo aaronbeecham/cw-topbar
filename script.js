@@ -52,8 +52,8 @@
             "itGlueId": "5429844",
             "credentialsId": "15552914",
             "localAdminId": "25303391",
-            "msaasId": "",
-            "soeId": ""
+            "msaasId": "293022-msaas-summary",
+            "soeId": "52627-applications"
         },
         "State Sport Centres Trust (SSCT)": {
             "itGlueId": "8261103",
@@ -249,7 +249,8 @@
         "Guidolin Agrimac": {
             "itGlueId": "8260895",
             "credentialsId": "17046512",
-            "localAdminId": "17032597"
+            "localAdminId": "17032597",
+            "dattoId": "158129/guidolin-agrimac"
         },
         "Australian Amalgamated Terminals (AAT)": {
             "itGlueId": "8261173",
@@ -447,7 +448,8 @@
         "RBA": {
             "itGlueId": "8261056",
             "credentialsId": "20576834",
-            "localAdminId": "4317575"
+            "localAdminId": "4317575",
+            "dattoId": "158505/rba"
         },
         "Interactive Community Care": {
             "itGlueId": "8260922",
@@ -460,7 +462,7 @@
             "localAdminId": "4515772"
         },
         "Directions Conference & Incentive Management": {
-            "itGlueId": "4261353",
+            "itGlueId": "4e261353",
             "credentialsId": "1283683",
             "localAdminId": "28826564"
         },
@@ -479,7 +481,7 @@
             "credentialsId": "5299093",
             "localAdminId": "4632827"
         },
-        "Maker Eng": {
+        "Maker CS": {
             "itGlueId": "8534917",
             "credentialsId": "30173465",
             "localAdminId": "30065109"
@@ -554,6 +556,15 @@
             "msaasId": "339335-msaas-summary",
             "soeId": "3098-applications",
             "dattoId": "104165/remedial-building-services-australia",
+            "usePowernetUrl": true
+        },
+        "Print and Pack Australia Pty Ltd": {
+            "itGlueId": "3658272",
+            "credentialsId": "7299833",
+            "localAdminId": "26947496",
+            "msaasId": "339335-msaas-summary",
+            "soeId": "3098-applications",
+            "dattoId": "",
             "usePowernetUrl": true
         },
     };
