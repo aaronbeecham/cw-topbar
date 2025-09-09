@@ -567,6 +567,15 @@
             "dattoId": "",
             "usePowernetUrl": true
         },
+        "Select Fresh Providores": {
+            "itGlueId": "1841936",
+            "credentialsId": "7316156",
+            "localAdminId": "2004389",
+            "msaasId": "339335-msaas-summary",
+            "soeId": "3098-applications",
+            "dattoId": "",
+            "usePowernetUrl": true
+        },
     };
 
     let previousCompanyName = null;
